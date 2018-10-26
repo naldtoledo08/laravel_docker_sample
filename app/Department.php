@@ -8,6 +8,6 @@ class Department extends Model
 {
     //
     protected $fillable = [
-    	'name', 'remarks'
+    	'name', 'description'
     ];
 }

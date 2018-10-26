@@ -20,7 +20,6 @@ class ProductController extends Controller
          $this->middleware('permission:product-list');
          $this->middleware('permission:product-create', ['only' => ['create','store']]);
          $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-
  
          $this->middleware('permission:product-delete', ['only' => ['destroy']]);
     }
@@ -103,7 +102,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-         request()->validate([
+        request()->validate([
             'name' => 'required',
             'detail' => 'required',
         ]);

@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:department-list');
+         $this->middleware('permission:department-create', ['only' => ['create','store']]);
+         $this->middleware('permission:department-edit', ['only' => ['edit','update']]);
+ 
+         $this->middleware('permission:department-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //
+        $departments = Department::latest()->paginate(5);
+        return view('departments.index',compact('departments'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -24,7 +35,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('departments.create');
     }
 
     /**
@@ -35,7 +46,15 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        Department::create($request->all());
+
+        return redirect()->route('departments.index')
+                        ->with('success','Department created successfully.');
     }
 
     /**
@@ -46,7 +65,7 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        //
+        return view('departments.show', compact('department'));
     }
 
     /**
@@ -57,7 +76,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        //
+        return view('departments.edit', compact('department'));
     }
 
     /**
@@ -69,7 +88,15 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
-        //
+        request()->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        $department->update($request->all());
+
+        return redirect()->route('departments.index')
+                        ->with('success','Department updated successfully');
     }
 
     /**
@@ -80,6 +107,10 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+        $department->delete();
+
+        return redirect()->route('departments.index')
+                        ->with('success','Department deleted successfully');
+    
     }
 }
