@@ -17,7 +17,8 @@ class UserTableSeeder extends Seeder
 		User::create([
 			'name' => 'Ronald Toledo',
 			'email' => 'nald.toledo08@gmail.com',
-			'password' => '$2y$10$ODXv1BScQnJrzaFed23RV.jCLui9weJjhb5RSHfLyZJXwco5jHpeu',
+            'password' => '$2y$10$ODXv1BScQnJrzaFed23RV.jCLui9weJjhb5RSHfLyZJXwco5jHpeu',
+			'department_id' => 1,
 		]);
 
     }

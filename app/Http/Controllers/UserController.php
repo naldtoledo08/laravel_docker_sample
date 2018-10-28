@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Department;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
@@ -14,6 +15,15 @@ use Hash;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:user-list');
+        $this->middleware('permission:user-create', ['only' => ['create','store']]);
+        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+
+        $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -34,8 +44,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        $departments = Department::pluck('name','id')->all();
         $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles'));
+        return view('users.create',compact('roles', 'departments'));
     }
 
 
@@ -49,6 +60,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'department_id' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
             'roles' => 'required'

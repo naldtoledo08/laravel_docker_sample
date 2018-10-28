@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'department_id'
     ];
 
     /**
@@ -28,4 +28,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    /**
+     *  Get the department associated to the user
+     */
+    public function department()
+    {
+        return $this->belongsTo('App\Department');
+    }
 }
