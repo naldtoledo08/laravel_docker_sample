@@ -1,29 +1,33 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\User;
-use App\Department;
+use App\Models\User;
+use App\Models\Department;
 use Spatie\Permission\Models\Role;
 use DB;
-use Hash;
+use App\Services\UserService;
+use App\Repositories\DepartmentRepository;
 
 
 class UserController extends Controller
 {
+    private $user;
+    private $department;
+    private $paginate = 20;
 
-    public function __construct()
+    public function __construct(DepartmentRepository $department, UserService $user)
     {
+        $this->user = $user;
+        $this->department = $department;
+
         $this->middleware('permission:user-list');
         $this->middleware('permission:user-create', ['only' => ['create','store']]);
         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
-
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +35,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
+        $data = $this->user->paginate(5);
+
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -44,8 +49,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        $departments = Department::pluck('name','id')->all();
+        $departments = $this->department->pluck();
+       
         $roles = Role::pluck('name','name')->all();
+
         return view('users.create',compact('roles', 'departments'));
     }
 
@@ -66,14 +73,8 @@ class UserController extends Controller
             'roles' => 'required'
         ]);
 
-
         $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-
-
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
-
+        $this->user->create($input);
 
         return redirect()->route('users.index')
                         ->with('success','User created successfully');
@@ -88,7 +89,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = $this->user->find($id);
         return view('users.show',compact('user'));
     }
 
@@ -101,10 +102,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = $this->user->find($id);
+
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
-
 
         return view('users.edit',compact('user','roles','userRole'));
     }
@@ -128,20 +129,8 @@ class UserController extends Controller
 
 
         $input = $request->all();
-        if(!empty($input['password'])){ 
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = array_except($input,array('password'));    
-        }
 
-
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
-
-
-        $user->assignRole($request->input('roles'));
-
+        $this->user->update($input, $id);
 
         return redirect()->route('users.index')
                         ->with('success','User updated successfully');
@@ -156,7 +145,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
+        $this->user->find($id)->delete();
+        
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
     }

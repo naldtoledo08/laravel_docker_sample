@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Department;
+use App\Repositories\DepartmentRepository;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
-{
-    function __construct()
+{   
+    private $department = null;
+    private $paginate = 20;
+
+    public function __construct(DepartmentRepository $department)
     {
-         $this->middleware('permission:department-list');
-         $this->middleware('permission:department-create', ['only' => ['create','store']]);
-         $this->middleware('permission:department-edit', ['only' => ['edit','update']]);
- 
-         $this->middleware('permission:department-delete', ['only' => ['destroy']]);
+        $this->department = $department;
+
+        $this->middleware('permission:department-list');
+        $this->middleware('permission:department-create', ['only' => ['create','store']]);
+        $this->middleware('permission:department-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:department-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -23,9 +27,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::latest()->paginate(5);
+        $departments = $this->department->paginate($this->paginate);
+
         return view('departments.index',compact('departments'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i', (request()->input('page', 1) - 1) * $this->paginate);
     }
 
     /**
@@ -51,7 +56,7 @@ class DepartmentController extends Controller
             'description' => 'required',
         ]);
 
-        Department::create($request->all());
+        $this->department->create($request->all());
 
         return redirect()->route('departments.index')
                         ->with('success','Department created successfully.');
@@ -63,8 +68,9 @@ class DepartmentController extends Controller
      * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function show(Department $department)
-    {
+    public function show($id)
+    {   
+        $department = $this->department->show($id);
         return view('departments.show', compact('department'));
     }
 
@@ -74,8 +80,9 @@ class DepartmentController extends Controller
      * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function edit(Department $department)
-    {
+    public function edit($id)
+    {   
+        $department = $this->department->show($id);
         return view('departments.edit', compact('department'));
     }
 
@@ -86,14 +93,14 @@ class DepartmentController extends Controller
      * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, $id)
     {
         request()->validate([
             'name' => 'required',
             'description' => 'required',
         ]);
 
-        $department->update($request->all());
+        $this->department->update($request->all(), $id);
 
         return redirect()->route('departments.index')
                         ->with('success','Department updated successfully');
@@ -105,9 +112,9 @@ class DepartmentController extends Controller
      * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Department $department)
+    public function destroy($id)
     {
-        $department->delete();
+        $this->department->delete($id);
 
         return redirect()->route('departments.index')
                         ->with('success','Department deleted successfully');

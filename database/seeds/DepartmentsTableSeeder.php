@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Department;
-//use Spatie\Permission\Models\User;
+use App\Models\Department;
 
 class DepartmentsTableSeeder extends Seeder
 {

@@ -1,16 +1,18 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -29,12 +31,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
+    protected $dates = ['deleted_at'];
+    
     /**
      *  Get the department associated to the user
      */
     public function department()
     {
-        return $this->belongsTo('App\Department');
+        return $this->belongsTo('App\Models\Department');
     }
 }
