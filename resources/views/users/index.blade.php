@@ -27,16 +27,16 @@
  <tr>
    <th>No</th>
    <th>Name</th>
-   <th>Department</th>
    <th>Email</th>
    <th>Roles</th>
+   <th>Department</th>
+   <th>Position</th>
    <th width="280px">Action</th>
  </tr>
  @foreach ($data as $key => $user)
   <tr>
     <td>{{ ++$i }}</td>
     <td>{{ $user->name }}</td>
-    <td>{{ $user->department->name }}</td>
     <td>{{ $user->email }}</td>
     <td>
       @if(!empty($user->getRoleNames()))
@@ -45,6 +45,7 @@
         @endforeach
       @endif
     </td>
+    <td>{{ $user->position->title }}</td>
     <td>
       <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
 

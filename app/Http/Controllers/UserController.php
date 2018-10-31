@@ -50,10 +50,11 @@ class UserController extends Controller
     public function create()
     {
         $departments = $this->department->pluck();
+        $positions = $this->position->pluck();
        
         $roles = Role::pluck('name','name')->all();
 
-        return view('users.create',compact('roles', 'departments'));
+        return view('users.create',compact('roles', 'departments', 'positions'));
     }
 
 
@@ -68,6 +69,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'department_id' => 'required',
+            'position_id' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
             'roles' => 'required'
@@ -104,10 +106,13 @@ class UserController extends Controller
     {
         $user = $this->user->find($id);
 
+        $departments = $this->department->pluck();
+        $positions = $this->position->pluck();
+
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
 
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('users.edit',compact('user', 'roles', 'departments', 'positions', 'userRole'));
     }
 
 

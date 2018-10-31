@@ -32,6 +32,11 @@ class PermissionTableSeeder extends Seeder
            'department-create',
            'department-edit',
            'department-delete',
+
+           'position-list',
+           'position-create',
+           'position-edit',
+           'position-delete',
         ];
 
 

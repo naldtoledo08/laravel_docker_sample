@@ -65,6 +65,12 @@
             {!! Form::select('department_id', $departments, [], array('class' => 'form-control')) !!}
         </div>
     </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Position:</strong>
+            {!! Form::select('position_id', $positions, [], array('class' => 'form-control')) !!}
+        </div>
+    </div>
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
