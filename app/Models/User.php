@@ -46,6 +46,6 @@ class User extends Authenticatable
      */
     public function position()
     {
-        return $this->belongsTo('App\Models\Position')
+        return $this->belongsTo('App\Models\Position');
     }
 }

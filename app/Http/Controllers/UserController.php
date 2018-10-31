@@ -9,18 +9,21 @@ use Spatie\Permission\Models\Role;
 use DB;
 use App\Services\UserService;
 use App\Repositories\DepartmentRepository;
+use App\Repositories\PositionRepository;
 
 
 class UserController extends Controller
 {
     private $user;
     private $department;
+    private $position;
     private $paginate = 20;
 
-    public function __construct(DepartmentRepository $department, UserService $user)
+    public function __construct(DepartmentRepository $department, PositionRepository $position, UserService $user)
     {
         $this->user = $user;
         $this->department = $department;
+        $this->position = $position;
 
         $this->middleware('permission:user-list');
         $this->middleware('permission:user-create', ['only' => ['create','store']]);

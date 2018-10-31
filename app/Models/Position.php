@@ -10,7 +10,7 @@ class Position extends Model
     use SoftDeletes;
 
     protected $fillable = [
-    	'name', 'description'
+    	'title', 'description'
     ];
 
     protected $dates = ['deleted_at'];

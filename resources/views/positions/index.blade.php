@@ -9,7 +9,7 @@
             </div>
             <div class="pull-right">
                 @can('position-create')
-                <a class="btn btn-success" href="{{ route('departments.create') }}"> Create New Position</a>
+                <a class="btn btn-success" href="{{ route('positions.create') }}"> Create New Position</a>
                 @endcan
             </div>
         </div>
@@ -36,10 +36,10 @@
             <td>{{ $position->title }}</td>
             <td>{{ $position->description }}</td>
             <td>
-                <form action="{{ route('departments.destroy',$position->id) }}" method="POST">
-                    <a class="btn btn-info" href="{{ route('departments.show',$position->id) }}">Show</a>
+                <form action="{{ route('positions.destroy',$position->id) }}" method="POST">
+                    <a class="btn btn-info" href="{{ route('positions.show',$position->id) }}">Show</a>
                     @can('position-edit')
-                    <a class="btn btn-primary" href="{{ route('departments.edit',$position->id) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('positions.edit',$position->id) }}">Edit</a>
                     @endcan
 
 
@@ -55,7 +55,7 @@
     </table>
 
 
-    {!! $departments->links() !!}
+    {!! $positions->links() !!}
 
 
 @endsection

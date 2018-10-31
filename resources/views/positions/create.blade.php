@@ -8,7 +8,7 @@
                 <h2>Add New Position</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('departments.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('positions.index') }}"> Back</a>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
     @endif
 
 
-    <form action="{{ route('departments.store') }}" method="POST">
+    <form action="{{ route('positions.store') }}" method="POST">
         @csrf
 
 
@@ -34,7 +34,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Title:</strong>
-                    <input type="text" name="title" class="form-control" placeholder="Title">
+                    <input type="text" name="title" class="form-control" placeholder="title">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
