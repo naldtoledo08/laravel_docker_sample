@@ -54,4 +54,17 @@ class UserService
 
         $user->assignRole($input['roles']);
 	}
+
+	public function updatePassword()
+	{
+
+	}
+
+	public function resetPassword()
+	{
+
+	}
+
+
+
 }

@@ -12,12 +12,13 @@
 */
 
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth', 'verified']], function() {
+    Route::get('dashboard','DashboardController@index')->name('dashboard');
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
     Route::resource('departments','DepartmentController');
