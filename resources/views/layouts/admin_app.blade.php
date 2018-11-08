@@ -64,17 +64,15 @@
               </li>
             @endcan
 
-            @can('user-list')  
+            @role('admin')
               <li>
                 <a href="{{ route('users.index') }}"> <i class="icon-user"></i>Users</a>
               </li>
-            @endcan
-
-            @can('role-list')
               <li>
                 <a href="{{ route('roles.index') }}"> <i class="icon-grid"></i>Roles</a>
               </li>
-            @endcan            
+            @endrole
+
           </ul>
         </div>
 
@@ -172,8 +170,7 @@
             </div>
           </div>
         </nav>
-      </header>
-      
+      </header>      
 
        <!-- Breadcrumb-->
       <div class="breadcrumb-holder">

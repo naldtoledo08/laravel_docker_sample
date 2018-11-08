@@ -14,7 +14,7 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        $role = Role::create(['name' => 'Administrator']);
+        $role = Role::create(['name' => 'admin']);
         $permissions = Permission::get()->pluck('id')->toArray();
         $role->syncPermissions($permissions);
 

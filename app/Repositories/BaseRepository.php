@@ -30,7 +30,7 @@ class BaseRepository
     }
 
     // remove record from the database
-    public function delete($id)
+    public function delete($id) : bool
     {
         return $this->model->destroy($id);
     }
