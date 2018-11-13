@@ -21,6 +21,10 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::resource('departments','DepartmentController');
     Route::resource('positions','PositionController');
     Route::resource('products','ProductController');
+
+    Route::resource('timesheets','TimesheetController');   
+    Route::post('timesheets/login','TimesheetController@login')->name('timesheet_login');
+    Route::post('timesheets/logout','TimesheetController@logout')->name('timesheet_logout');
 });
 
 Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function() {

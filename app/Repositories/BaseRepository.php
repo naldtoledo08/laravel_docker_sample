@@ -40,10 +40,17 @@ class BaseRepository
     {
         return $this->model->findOrFail($id);
     }
+
     // show the record with the given id
     public function find($id)
     {
         return $this->model->findOrFail($id);
+    }
+
+    // show the record with the given user id
+    public function findByUser($user_id)
+    {
+        return $this->model::where('user_id', $user_id)->get();
     }
 
     // Get the associated model

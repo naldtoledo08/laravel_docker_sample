@@ -14,14 +14,14 @@ use App\Repositories\PositionRepository;
 
 class UserController extends Controller
 {
-    private $user;
+    private $userService;
     private $department;
     private $position;
     private $paginate = 20;
 
-    public function __construct(DepartmentRepository $department, PositionRepository $position, UserService $user)
+    public function __construct(DepartmentRepository $department, PositionRepository $position, UserService $userService)
     {
-        $this->user = $user;
+        $this->userService = $userService;
         $this->department = $department;
         $this->position = $position;
 
@@ -38,10 +38,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = $this->user->paginate(5);
+        $users = $this->userService->paginate($this->paginate);
 
-        return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('users.index',compact('users'))
+            ->with('i', ($request->input('page', 1) - 1) * $this->paginate);
     }
 
 
@@ -79,7 +79,7 @@ class UserController extends Controller
         ]);
 
         $input = $request->all();
-        $this->user->create($input);
+        $this->userService->create($input);
 
         return redirect()->route('users.index')
                         ->with('success','User created successfully');
@@ -94,7 +94,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->user->find($id);
+        $user = $this->userService->find($id);
         return view('users.show',compact('user'));
     }
 
@@ -107,7 +107,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->user->find($id);
+        $user = $this->userService->find($id);
 
         $departments = $this->department->pluck();
         $positions = $this->position->pluck();
@@ -138,7 +138,7 @@ class UserController extends Controller
 
         $input = $request->all();
 
-        $this->user->update($input, $id);
+        $this->userService->update($input, $id);
 
         return redirect()->route('users.index')
                         ->with('success','User updated successfully');
@@ -153,7 +153,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->user->find($id)->delete();
+        $this->userService->find($id)->delete();
         
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');

@@ -217,5 +217,6 @@
     <script src="{{ asset('theme/js/charts-home.js') }}"></script>
     <!-- Main File-->
     <script src="{{ asset('theme/js/front.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
   </body>
 </html>

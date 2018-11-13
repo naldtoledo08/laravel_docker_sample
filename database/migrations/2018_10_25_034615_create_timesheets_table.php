@@ -19,8 +19,8 @@ class CreateTimesheetsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('date');
             $table->datetime('time_in');
-            $table->datetime('time_out');
-            $table->text('remarks');
+            $table->datetime('time_out')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }
