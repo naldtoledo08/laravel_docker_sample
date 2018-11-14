@@ -6,19 +6,20 @@ use Illuminate\Http\Request;
 use App\Services\TimesheetService;
 use App\Services\UserService;
 use Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TimesheetController extends Controller
 {
     private $timesheetService;
     private $userService;
-    private $user_id;
     private $paginate = 20;
 
     public function __construct(UserService $userService, TimesheetService $timesheetService)
     {
         $this->userService  = $userService;
         $this->timesheetService  = $timesheetService;
-        $this->user_id = Auth::id();
+
+        //$this->middleware('permission:timesheet-summary', ['only' => ['index']]);
     }
 
     /**
@@ -27,11 +28,19 @@ class TimesheetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $users = $this->userService->paginate($this->paginate);
+    {   
+        $user = Auth::user();
+        if($user->hasPermissionTo('timesheet-summary')) {
+            
+            $users = $this->timesheetService->getUsersTimesheetSummary();
 
-        return view('timesheets.index',compact('users'))
-            ->with('i', ($request->input('page', 1) - 1) * $this->paginate);
+            return view('timesheets.index',compact('users'))
+                ->with('i', ($request->input('page', 1) - 1) * $this->paginate);
+                    // the user can do everything
+        }else{
+            return redirect()->route('timesheets.show', $user->id)
+                        ->with('warning','You are not allowed to access Timesheet Summary.');
+        }
     }
 
     /**
@@ -57,31 +66,53 @@ class TimesheetController extends Controller
 
     public function login(Request $request)
     {
+
         $user_id = $request->user_id;
-        $input = [
-            'user_id' => $user_id,
-            'date' => date('Y-m-d'),
-            'time_in' => date('Y-m-d h:i:s')
-        ];
 
-        $this->timesheetService->create($input);
+        if (Gate::allows('meOrAdmin', $user_id)) {
+            $input = [
+                'user_id' => $user_id,
+                'date' => date('Y-m-d'),
+                'time_in' => date('Y-m-d h:i:s')
+            ];
 
-        return redirect()->route('timesheets.show', $user_id)
-                        ->with('success','You are already Login.');
+            $remarks = $this->timesheetService->getRemarks(Auth::user() , 'login');
+            if($remarks){
+                $input['remarks'] = $remarks;
+            }
+
+            $this->timesheetService->create($input);
+
+            return redirect()->route('timesheets.show', $user_id)
+                            ->with('success','You are already Login.');
+        } else {
+            return redirect()->route('timesheets.show', $user->id)
+                        ->with('warning','You are not allowed to accesss other Timesheet.');
+        }
     }
 
     public function logout(Request $request)
     {
         $id = $request->id;        
         $user_id = $request->user_id;
-        $input = [
-            'time_out' => date('Y-m-d h:i:s')
-        ];
 
-        $this->timesheetService->update($input, $id);
+        if (Gate::allows('meOrAdmin', $user_id)) {
+          
+            $input = ['time_out' => date('Y-m-d h:i:s')];
 
-        return redirect()->route('timesheets.show', $user_id)
-                        ->with('success','You are already Logout.');
+            $remarks = $this->timesheetService->getRemarks(Auth::user() , 'login');
+            if($remarks){
+                $input['remarks'] = $remarks;
+            }
+
+            $this->timesheetService->update($input, $id);
+
+            return redirect()->route('timesheets.show', $user_id)
+                            ->with('success','You are already Logout.');
+        } else {
+            return redirect()->route('timesheets.show', $user->id)
+                        ->with('warning','You are not allowed to accesss other Timesheet.');
+        }
     }
 
     /**
@@ -92,12 +123,24 @@ class TimesheetController extends Controller
      */
     public function show($id)
     {
-        $dates = $this->timesheetService->getDaysBefore(10);
-        $today = date('Y-m-d');
-        $user = $this->userService->find($id);
-        $timesheets = $this->timesheetService->getInitialData($id);
+        $user = Auth::user();
+        if (Gate::allows('meOrAdmin', $id)) {
+            
+            if($user->hasRole('admin') && $user->id == $id){
+                return redirect()->route('timesheets.index')
+                        ->with('warning','Administrators are not allowed to Log on their own Timesheet.');
+            }
 
-        return view('timesheets.show',compact('timesheets', 'user', 'dates', 'today', 'id'));
+            $dates = $this->timesheetService->getDaysBefore(10);
+            $today = date('Y-m-d');
+            $user = $this->userService->find($id);
+            $timesheets = $this->timesheetService->getInitialData($id);
+
+            return view('timesheets.show',compact('timesheets', 'user', 'dates', 'today', 'id'));
+        }else{
+            return redirect()->route('timesheets.show', $user->id)
+                        ->with('warning','You are not allowed to accesss other Timesheet.');
+        }
     }
 
     /**

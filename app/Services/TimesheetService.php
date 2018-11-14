@@ -45,4 +45,24 @@ class TimesheetService
 		return $dates;
 	}
 
+	/**
+	 * $user - auth user
+	 * $type - login or logout
+	 */
+	public function getRemarks($user, $type)
+	{
+		if($user->hasRole('admin')) {
+			return 'Admin '. $type . ' at '.date('Y-m-d h:i:s');
+		}
+	}
+
+
+	/**
+	 * 
+	 */
+	public function getUsersTimesheetSummary()
+	{
+		return $this->timesheetRepo->getUsersTimesheetSummary();
+	}
+
 }

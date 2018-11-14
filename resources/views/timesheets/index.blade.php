@@ -19,6 +19,11 @@
   <p>{{ $message }}</p>
 </div>
 @endif
+@if ($message = Session::get('warning'))
+    <div class="alert alert-warning">
+        <p>{{ $message }}</p>
+    </div>
+@endif
 
 
 <table class="table table-bordered">
@@ -27,14 +32,16 @@
         <th>Name</th>
         <th>Department</th>
         <th>Position</th>
+        <th>Last time-in</th>
         <th width="280px">Action</th>
     </tr>
     @foreach ($users as $user)
     <tr>
-        <td>{{ ++$i }}</td>
+        <td></td>
         <td>{{ $user->name }}</td>
-        <td>{{ $user->department ? $user->department->name : ''  }}</td>
-        <td>{{ $user->position ? $user->position->title : '' }}</td>
+        <td>{{ $user->department ? $user->department : ''  }}</td>
+        <td>{{ $user->position ? $user->position : '' }}</td>
+        <td>{{ $user->last_time_in }}</td>
         <td>
             <a class="btn btn-info" href="{{ route('timesheets.show',$user->id) }}">Show</a>
             <a class="btn btn-primary" href="{{ route('timesheets.edit',$user->id) }}">Edit</a>
@@ -44,7 +51,6 @@
 </table>
 
 
-{!! $users->render() !!}
 
 
 @endsection

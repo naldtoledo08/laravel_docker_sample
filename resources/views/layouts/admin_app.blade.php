@@ -64,6 +64,14 @@
               </li>
             @endcan
 
+            <li>
+              @can('timesheet-summary')
+                <a href="{{ route('timesheets.index') }}"> <i class="icon-grid"></i>Timesheets</a>
+              @else                
+                <a href="{{ route('timesheets.show', Auth::user()->id) }}"> <i class="icon-grid"></i>Timesheets</a>
+              @endcan
+            </li>
+
             @role('admin')
               <li>
                 <a href="{{ route('users.index') }}"> <i class="icon-user"></i>Users</a>
