@@ -49,22 +49,22 @@
         <div class="main-menu">
           <h5 class="sidenav-heading">Main</h5>
           <ul id="side-main-menu" class="side-menu list-unstyled">                  
-            <li>
+            <li class="{{is_route_active('dashboard')}}">
               <a href="{{ route('dashboard') }}"> <i class="icon-home"></i>Dashboard</a>
             </li>
             @can('department-list')
-              <li>
+              <li class="{{is_route_active('departments')}}">
                 <a href="{{ route('departments.index') }}"> <i class="fa fa-bar-chart"></i>Departments</a>
               </li>
             @endcan
 
             @can('position-list')
-              <li>
+              <li class="{{is_route_active('positions')}}">
                 <a href="{{ route('positions.index') }}"> <i class="icon-grid"></i>Positions</a>
               </li>
             @endcan
 
-            <li>
+            <li class="{{is_route_active('timesheets')}}">
               @can('timesheet-summary')
                 <a href="{{ route('timesheets.index') }}"> <i class="icon-grid"></i>Timesheets</a>
               @else                
@@ -73,10 +73,10 @@
             </li>
 
             @role('admin')
-              <li>
+              <li class="{{is_route_active('users')}}">
                 <a href="{{ route('users.index') }}"> <i class="icon-user"></i>Users</a>
               </li>
-              <li>
+              <li class="{{is_route_active('roles')}}">
                 <a href="{{ route('roles.index') }}"> <i class="icon-grid"></i>Roles</a>
               </li>
             @endrole

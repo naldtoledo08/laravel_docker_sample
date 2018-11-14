@@ -87,7 +87,7 @@ class TimesheetController extends Controller
                             ->with('success','You are already Login.');
         } else {
             return redirect()->route('timesheets.show', $user->id)
-                        ->with('warning','You are not allowed to accesss other Timesheet.');
+                        ->with('warning','You are not allowed to access other Timesheet.');
         }
     }
 
@@ -111,7 +111,7 @@ class TimesheetController extends Controller
                             ->with('success','You are already Logout.');
         } else {
             return redirect()->route('timesheets.show', $user->id)
-                        ->with('warning','You are not allowed to accesss other Timesheet.');
+                        ->with('warning','You are not allowed to access other Timesheet.');
         }
     }
 
@@ -172,8 +172,22 @@ class TimesheetController extends Controller
      * @param  \App\Timesheet  $timesheet
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Timesheet $timesheet)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->id;
+        $user_id = $request->user_id;
+
+        $user = Auth::user();
+        if($user->hasRole('admin')) {
+              
+            $this->timesheetService->delete($id);
+
+            return redirect()->route('timesheets.show', $user_id)
+                            ->with('success','Time-in successfully deleted');
+
+         }else{
+            return redirect()->route('timesheets.show', $user->id)
+                        ->with('warning','You are not allowed to delete Timesheet.');
+        }
     }
 }

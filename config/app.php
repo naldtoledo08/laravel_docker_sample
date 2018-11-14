@@ -162,7 +162,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
-
+        App\Providers\HelperServiceProvider::class,
     ],
 
     /*

@@ -32,6 +32,11 @@ class TimesheetService
         return $result;
 	}
 
+	public function delete($id)
+	{
+		return $this->timesheetRepo->delete($id);
+	}
+	
 	public function getDaysBefore($number_of_days)
 	{
 		$date = date('Y-m-d', strtotime('now'));

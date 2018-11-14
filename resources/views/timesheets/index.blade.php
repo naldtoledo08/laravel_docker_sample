@@ -41,7 +41,7 @@
         <td>{{ $user->name }}</td>
         <td>{{ $user->department ? $user->department : ''  }}</td>
         <td>{{ $user->position ? $user->position : '' }}</td>
-        <td>{{ $user->last_time_in }}</td>
+        <td>{{ $user->last_time_in ? display_date_time($user->last_time_in) : '' }}</td>
         <td>
             <a class="btn btn-info" href="{{ route('timesheets.show',$user->id) }}">Show</a>
             <a class="btn btn-primary" href="{{ route('timesheets.edit',$user->id) }}">Edit</a>

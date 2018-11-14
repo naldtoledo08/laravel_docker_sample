@@ -8,4 +8,13 @@ $(document).ready(function() {
 	            form.submit();
 	        });
 	});
+
+	$('.btn_delete_timein').click(function(e) {
+	    e.preventDefault();
+	    var delete_form = $("#timesheet-form-delete-" + $(this).attr('data-timesheetId'));	    
+	    $('#confirm-delete-timein').modal({ backdrop: 'static', keyboard: false })
+	        .on('click', '.btn-delete-timein', function(){
+	            delete_form.submit();
+	        });
+	});
 });

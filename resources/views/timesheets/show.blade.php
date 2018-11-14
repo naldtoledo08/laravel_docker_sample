@@ -29,6 +29,7 @@
 
     <table class="table table-bordered">
         <tr>
+            <th>Day</th>
             <th>Date</th>
             <th>In</th>
             <th>Out</th>
@@ -38,7 +39,8 @@
         </tr>
         @foreach ($dates as $date)
         <tr>
-            <td>{{ $date }}</td>
+            <td>{{ display_day($date) }}</td>
+            <td>{{ display_date($date) }}</td>
             <td>
                 @if(!isset($timesheets[$date]))
                     @if($date == $today)
@@ -49,7 +51,7 @@
                         </form>
                     @endif
                 @else
-                    {{ $timesheets[$date]->time_in }}
+                    {{ display_time($timesheets[$date]->time_in) }}
                 @endif
             </td>
             <td>
@@ -65,18 +67,21 @@
                             </form>
                         @endif
                     @else
-                        {{ $timesheets[$date]->time_out }}
+                        {{ display_time($timesheets[$date]->time_out) }}
                     @endif
                 @endif
             </td>
             @role('admin')
             <td>
                 @if(isset($timesheets[$date]))
-                <form action="{{ route('timesheets.destroy',$timesheets[$date]->id) }}" method="POST">
-                    <input type="hidden" value="{{ $id }}" name="id">
+                <form action="{{ route('timesheets.destroy',$timesheets[$date]->id) }}" method="POST" id="timesheet-form-delete-{{ $timesheets[$date]->id }}">
+                    <input type="hidden" value="{{ $id }}" name="user_id">
+                    <input type="hidden" value="{{ $timesheets[$date]->id }}" name="id">
                     <a class="btn btn-primary" href="{{ route('timesheets.edit',$timesheets[$date]->id) }}">Edit</a>
                     @csrf
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    @method('DELETE')
+                    <a class="btn btn-danger btn_delete_timein" href="#" data-timesheetId="{{ $timesheets[$date]->id }}">Delete</a>
+                    <!-- <button type="submit" class="btn btn-danger">Delete</button> -->
                 </form>
                 @endif
             </td>
