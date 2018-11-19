@@ -24,6 +24,11 @@ class PermissionTableSeeder extends Seeder
            'position-delete',
 
            'timesheet-summary',
+
+           'leave-credits-list',
+           'leave-credits-create',
+           'leave-credits-edit',
+           'leave-credits-delete',
         ];
 
 

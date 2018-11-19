@@ -73,6 +73,12 @@
             </li>
 
             @role('admin')
+              <li class="{{is_route_active('shifts')}}">
+                <a href="{{ route('shifts.index') }}"> <i class="icon-user"></i>Shifts</a>
+              </li>
+              <li class="{{is_route_active('leave-types')}}">
+                <a href="{{ route('leave-types.index') }}"> <i class="icon-user"></i>Leave Types</a>
+              </li>
               <li class="{{is_route_active('users')}}">
                 <a href="{{ route('users.index') }}"> <i class="icon-user"></i>Users</a>
               </li>

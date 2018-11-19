@@ -20,8 +20,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::get('dashboard','DashboardController@index')->name('dashboard');   
     Route::resource('departments','DepartmentController');
     Route::resource('positions','PositionController');
-    Route::resource('products','ProductController');
-
+    Route::resource('products','ProductController');    
+    Route::resource('leave-credits','LeaveCreditController');
     Route::resource('timesheets','TimesheetController');   
     Route::post('timesheets/login','TimesheetController@login')->name('timesheet_login');
     Route::post('timesheets/logout','TimesheetController@logout')->name('timesheet_logout');
@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function() {
 	Route::resource('roles','RoleController');
     Route::resource('users','UserController');
+    Route::resource('shifts','ShiftController');
+    Route::resource('leave-types','LeaveTypeController');
 });
 
 
