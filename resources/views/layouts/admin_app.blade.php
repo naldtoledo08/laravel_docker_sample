@@ -79,6 +79,9 @@
               <li class="{{is_route_active('leave-types')}}">
                 <a href="{{ route('leave-types.index') }}"> <i class="icon-user"></i>Leave Types</a>
               </li>
+              <li class="{{is_route_active('remotes')}}">
+                <a href="{{ route('remotes.index') }}"> <i class="icon-user"></i>Remote Details</a>
+              </li>
               <li class="{{is_route_active('users')}}">
                 <a href="{{ route('users.index') }}"> <i class="icon-user"></i>Users</a>
               </li>

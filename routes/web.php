@@ -28,10 +28,11 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 });
 
 Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function() {
-	Route::resource('roles','RoleController');
-    Route::resource('users','UserController');
-    Route::resource('shifts','ShiftController');
-    Route::resource('leave-types','LeaveTypeController');
+    Route::resource('remotes', 'RemoteController');
+	Route::resource('roles', 'RoleController');
+    Route::resource('users', 'UserController');
+    Route::resource('shifts', 'ShiftController');
+    Route::resource('leave-types', 'LeaveTypeController');
 });
 
 
