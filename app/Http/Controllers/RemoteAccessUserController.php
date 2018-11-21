@@ -59,8 +59,8 @@ class RemoteAccessUserController extends Controller
         ]);
 
         $input = $request->all();
-        $input['approve'] = 1;
-        
+        $input['is_approve'] = 1;
+
         $this->remoteAccessRepo->create($input);
 
         return redirect()->route('remote-access.index')
@@ -69,9 +69,7 @@ class RemoteAccessUserController extends Controller
 
     public function approve(Request $request)
     {
-        $id = $request->id;
-
-        $this->remoteAccessRepo->update(['approve'=> 1], $id);
+        $this->remoteAccessRepo->update(['is_approve'=> 1], $request->id);
         
         return redirect()->route('remote-access.index')
                         ->with('success','User remote access approved successfully');

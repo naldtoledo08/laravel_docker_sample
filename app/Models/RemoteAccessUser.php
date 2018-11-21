@@ -10,7 +10,7 @@ class RemoteAccessUser extends Model
     use SoftDeletes;
 
     protected $fillable = [
-    	'user_id', 'from', 'to', 'reason', 'approve'
+    	'user_id', 'from', 'to', 'reason', 'is_approve'
     ];
 
     protected $dates = ['deleted_at'];

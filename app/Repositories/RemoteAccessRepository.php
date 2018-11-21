@@ -24,7 +24,7 @@ class RemoteAccessRepository extends BaseRepository implements RepositoryInterfa
     	$result = $this->model->where('user_id', $user_id)
     				->where('from', '<=', $date)
                     ->where('to', '>=', $date)
-    				->where('approve', 1)
+    				->where('is_approve', 1)
     				->first();
 
     	return $result ? true : false;

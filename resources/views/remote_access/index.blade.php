@@ -41,7 +41,7 @@
     <td>{{ display_date($row->from) }}</td>
     <td>{{ display_date($row->to) }}</td>
     <td>{{ $row->reason }}</td>
-    <td>{{ $row->approve }}</td>
+    <td>{{ (($row->is_approve == 1) ? 'Yes' : 'No') }}</td>
     <td>
 
       <form action="{{ route('approve_remote_access') }}" method="POST" id="remote-access-form-approve-{{ $row->id }}">

@@ -20,7 +20,7 @@ class CreateRemoteAccessUsersTable extends Migration
             $table->date('from');
             $table->date('to');
             $table->text('reason')->nullable();
-            $table->tinyinteger('approve')->default(0);
+            $table->tinyinteger('is_approve')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
