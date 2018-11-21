@@ -41,31 +41,35 @@
         <tr>
             <td>{{ display_day($date) }}</td>
             <td>{{ display_date($date) }}</td>
-            <td>
+            <td>            
                 @if(!isset($timesheets[$date]))
-                    @if($date == $today)
-                        <form action="{{ route('timesheet_login') }}" method="POST">
-                            @csrf
-                            <input type="hidden" value="{{ $id }}" name="user_id">
-                            <button type="submit" class="btn btn-danger">Login</button>
-                        </form>
-                    @endif
+                    @can('remote-access')
+                        @if($date == $today)
+                            <form action="{{ route('timesheet_login') }}" method="POST">
+                                @csrf
+                                <input type="hidden" value="{{ $id }}" name="user_id">
+                                <button type="submit" class="btn btn-danger">Login</button>
+                            </form>
+                        @endif
+                    @endcan
                 @else
                     {{ display_time($timesheets[$date]->time_in) }}
                 @endif
             </td>
-            <td>
+            <td>                
                 @if(isset($timesheets[$date]))
                     @if(!isset($timesheets[$date]->time_out))
-                        @if(isset($timesheets[$date]->time_in) && $date == $today)
-                            <form action="{{ route('timesheet_logout') }}" method="POST" id="timesheet-logout-{{ $timesheets[$date]->id }}">
-                                @csrf
-                                <input type="hidden" value="{{ $id }}" name="user_id">
-                                <input type="hidden" value="{{ $timesheets[$date]->id }}" name="id">
-                                <a class="btn btn-danger" href="#" id="btn_logout" data-timesheetId="{{ $timesheets[$date]->id }}">Logout</a>
-                                <!-- <button  class="btn btn-danger" id="btn_logout" data-timesheetId="{{ $timesheets[$date]->id }}">Logout</button> -->
-                            </form>
-                        @endif
+                        @can('remote-access')
+                            @if(isset($timesheets[$date]->time_in) && $date == $today)
+                                <form action="{{ route('timesheet_logout') }}" method="POST" id="timesheet-logout-{{ $timesheets[$date]->id }}">
+                                    @csrf
+                                    <input type="hidden" value="{{ $id }}" name="user_id">
+                                    <input type="hidden" value="{{ $timesheets[$date]->id }}" name="id">
+                                    <a class="btn btn-danger" href="#" id="btn_logout" data-timesheetId="{{ $timesheets[$date]->id }}">Logout</a>
+                                    <!-- <button  class="btn btn-danger" id="btn_logout" data-timesheetId="{{ $timesheets[$date]->id }}">Logout</button> -->
+                                </form>
+                            @endif
+                        @endcan
                     @else
                         {{ display_time($timesheets[$date]->time_out) }}
                     @endif

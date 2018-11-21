@@ -36,7 +36,7 @@ class TimesheetController extends Controller
 
             return view('timesheets.index',compact('users'))
                 ->with('i', ($request->input('page', 1) - 1) * $this->paginate);
-                    // the user can do everything
+                
         }else{
             return redirect()->route('timesheets.show', $user->id)
                         ->with('warning','You are not allowed to access Timesheet Summary.');
@@ -68,15 +68,16 @@ class TimesheetController extends Controller
     {
 
         $user_id = $request->user_id;
+        $user = Auth::user();
 
-        if (Gate::allows('meOrAdmin', $user_id)) {
+        if (Gate::allows('do-action-if-user-or-admin', $user_id)  && $user->can('remote-access')) {
             $input = [
                 'user_id' => $user_id,
                 'date' => date('Y-m-d'),
                 'time_in' => date('Y-m-d h:i:s')
             ];
 
-            $remarks = $this->timesheetService->getRemarks(Auth::user() , 'login');
+            $remarks = $this->timesheetService->getRemarks($user , 'login');
             if($remarks){
                 $input['remarks'] = $remarks;
             }
@@ -96,11 +97,13 @@ class TimesheetController extends Controller
         $id = $request->id;        
         $user_id = $request->user_id;
 
-        if (Gate::allows('meOrAdmin', $user_id)) {
+        $user = Auth::user();
+
+        if (Gate::allows('do-action-if-user-or-admin', $user_id)  && $user->can('remote-access')) {
           
             $input = ['time_out' => date('Y-m-d h:i:s')];
 
-            $remarks = $this->timesheetService->getRemarks(Auth::user() , 'login');
+            $remarks = $this->timesheetService->getRemarks($user , 'login');
             if($remarks){
                 $input['remarks'] = $remarks;
             }
@@ -121,10 +124,12 @@ class TimesheetController extends Controller
      * @param  \App\Timesheet  $timesheet
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        
         $user = Auth::user();
-        if (Gate::allows('meOrAdmin', $id)) {
+
+        if (Gate::allows('do-action-if-user-or-admin', $id)) {
             
             if($user->hasRole('admin') && $user->id == $id){
                 return redirect()->route('timesheets.index')

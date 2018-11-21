@@ -71,4 +71,12 @@ class BaseRepository
     {
         return $this->model->with($relations);
     }
+
+    public function findByParams($params)
+    {
+        return $this->model->where($params)->get();
+    }
+
+
+
 }

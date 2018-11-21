@@ -17,7 +17,7 @@ class CreateRemotesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('ip_address');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
