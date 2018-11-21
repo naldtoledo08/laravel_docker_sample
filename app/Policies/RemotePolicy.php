@@ -4,30 +4,32 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Models\Remote;
-use App\Repositories\RemoteRepository;
+use App\Services\RemoteAccessService;
 use Illuminate\Http\Request;
 
 class RemotePolicy
 {
     use HandlesAuthorization;
 
-    private $remoteRepo;
+    private $remoteService;
     /**
      * Create a new policy instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(RemoteAccessService $remoteAccessService)
     {
-        $this->remoteRepo = new RemoteRepository(new Remote);
+        $this->remoteService = $remoteAccessService;
     }
 
     public function remote_access(User $user)
     {    
         $ip_address = \Request::ip();
-        $result = $this->remoteRepo->findByParams(['ip_address' => $ip_address])->first();
+        $date = date('Y-m-d', strtotime('now'));
 
-        return $result ? true : false;
+        $ip_allowed = $this->remoteService->isUserIPAllowed($ip_address);
+        $remote_access = $this->remoteService->isUserCanRemoteByDate($user->id, $date);
+
+        return ($ip_allowed || $remote_access) ? true : false;
     }
 }

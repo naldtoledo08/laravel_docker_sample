@@ -82,6 +82,9 @@
               <li class="{{is_route_active('remotes')}}">
                 <a href="{{ route('remotes.index') }}"> <i class="icon-user"></i>Remote Details</a>
               </li>
+              <li class="{{is_route_active('remote-access')}}">
+                <a href="{{ route('remote-access.index') }}"> <i class="icon-user"></i>Remote Access User</a>
+              </li>
               <li class="{{is_route_active('users')}}">
                 <a href="{{ route('users.index') }}"> <i class="icon-user"></i>Users</a>
               </li>

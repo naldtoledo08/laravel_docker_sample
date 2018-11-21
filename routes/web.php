@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function() {
     Route::resource('users', 'UserController');
     Route::resource('shifts', 'ShiftController');
     Route::resource('leave-types', 'LeaveTypeController');
+    Route::resource('remote-access', 'RemoteAccessUserController');
+    Route::post('remote-access/approve','RemoteAccessUserController@approve')->name('approve_remote_access');  
 });
 
 

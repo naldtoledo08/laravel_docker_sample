@@ -21,4 +21,8 @@ class UserRepository extends BaseRepository implements RepositoryInterface
         DB::table('model_has_roles')->where('model_id',$id)->delete();
     }
 
+    public function pluck(){
+        return $this->model::pluck('name','id')->all();
+    }
+
 }

@@ -17,4 +17,13 @@ $(document).ready(function() {
 	            delete_form.submit();
 	        });
 	});
+
+	$('.btn_approve_access').click(function(e) {
+	    e.preventDefault();
+	    var form = $("#remote-access-form-approve-" + $(this).attr('data-remoteAccessId'));	    
+	    $('#confirm-approve-remote-access').modal({ backdrop: 'static', keyboard: false })
+	        .on('click', '.btn-confirm-approve-remote-access', function(){
+	            form.submit();
+	        });
+	});
 });
