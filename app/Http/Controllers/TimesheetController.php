@@ -66,7 +66,6 @@ class TimesheetController extends Controller
 
     public function login(Request $request)
     {
-
         $user_id = $request->user_id;
         $user = Auth::user();
 
@@ -74,15 +73,10 @@ class TimesheetController extends Controller
             $input = [
                 'user_id' => $user_id,
                 'date' => date('Y-m-d'),
-                'time_in' => date('Y-m-d h:i:s')
+                'remarks' => $this->timesheetService->getRemarks($user , 'login')
             ];
 
-            $remarks = $this->timesheetService->getRemarks($user , 'login');
-            if($remarks){
-                $input['remarks'] = $remarks;
-            }
-
-            $this->timesheetService->create($input);
+            $this->timesheetService->login($input);
 
             return redirect()->route('timesheets.show', $user_id)
                             ->with('success','You are already Login.');
@@ -94,21 +88,18 @@ class TimesheetController extends Controller
 
     public function logout(Request $request)
     {
-        $id = $request->id;        
+        $id = $request->id;
         $user_id = $request->user_id;
 
         $user = Auth::user();
 
         if (Gate::allows('do-action-if-user-or-admin', $user_id)  && $user->can('remote-access')) {
-          
-            $input = ['time_out' => date('Y-m-d h:i:s')];
 
-            $remarks = $this->timesheetService->getRemarks($user , 'login');
-            if($remarks){
-                $input['remarks'] = $remarks;
-            }
+            $input = $request->all();
+            
+            $input['remarks'] = $this->timesheetService->getRemarks($user , 'logout');
 
-            $this->timesheetService->update($input, $id);
+            $this->timesheetService->logout($input);
 
             return redirect()->route('timesheets.show', $user_id)
                             ->with('success','You are already Logout.');

@@ -8,6 +8,6 @@ class Timesheet extends Model
 {
     //
     protected $fillable = [
-    	'user_id', 'date', 'time_in', 'time_out', 'remarks'
+    	'user_id', 'date', 'time_in', 'time_out', 'time_in_ip', 'time_out_ip', 'remarks'
     ];
 }

@@ -32,6 +32,31 @@ class TimesheetService
         return $result;
 	}
 
+	public function login($data)
+	{
+		$data['time_in'] = date('Y-m-d h:i:s');
+		$data['time_in_ip'] = \Request::ip();
+
+        $result = $this->timesheetRepo->create($data);
+        return $result;
+	}
+
+	public function logout($data)
+	{
+		$data['time_out'] = date('Y-m-d h:i:s');
+		$data['time_out_ip'] = \Request::ip();
+
+        $timesheet = $this->timesheetRepo->findByParams([
+	        				'user_id' => $data['user_id'],
+	        				'date' => $data['date'],
+        				])->first();
+
+        $data['remarks'] = $timesheet->remarks . (($timesheet->remarks) ? ' \n' : '') . $data['remarks'];
+        $result = $timesheet->update($data);
+
+        return $result;
+	}
+
 	public function delete($id)
 	{
 		return $this->timesheetRepo->delete($id);

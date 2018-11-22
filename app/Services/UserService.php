@@ -3,18 +3,15 @@
 namespace App\Services;
 
 use App\Repositories\UserRepository;
-use App\Repositories\DepartmentRepository;
 use Hash;
 
 class UserService
 {
 	private $user;
-	//private $department;
 
 	public function __construct(UserRepository $user)
 	{
 		$this->user = $user;
-		//$this->department = $department;
 	}
 
 	public function create($input)
@@ -22,8 +19,10 @@ class UserService
         $input['password'] = Hash::make($input['password']);
 
         $user = $this->user->create($input);
-
-        $user->assignRole($input['roles']);
+                
+        if(isset($input['roles'])) {
+        	$user->assignRole($input['roles']);
+        }
 
         return $user;
 	}
@@ -38,8 +37,8 @@ class UserService
 		return $this->user->show($id);
 	}
 
-	public function update($input, $id){
-
+	public function update($input, $id)
+	{
         if(!empty($input['password'])){ 
             $input['password'] = Hash::make($input['password']);
         }else{
@@ -55,14 +54,19 @@ class UserService
         $user->assignRole($input['roles']);
 	}
 
+	public function findUsersExceptAdmin()
+	{
+		return $this->user->findUsersExceptAdmin();
+	}
+
 	public function updatePassword()
 	{
 
 	}
 
-	public function resetPassword()
+	public function resetPassword($email, $token)
 	{
-
+		
 	}
 
 

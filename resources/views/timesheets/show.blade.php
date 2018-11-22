@@ -65,6 +65,7 @@
                                     @csrf
                                     <input type="hidden" value="{{ $id }}" name="user_id">
                                     <input type="hidden" value="{{ $timesheets[$date]->id }}" name="id">
+                                    <input type="hidden" value="{{ $date }}" name="date">
                                     <a class="btn btn-danger" href="#" id="btn_logout" data-timesheetId="{{ $timesheets[$date]->id }}">Logout</a>
                                     <!-- <button  class="btn btn-danger" id="btn_logout" data-timesheetId="{{ $timesheets[$date]->id }}">Logout</button> -->
                                 </form>

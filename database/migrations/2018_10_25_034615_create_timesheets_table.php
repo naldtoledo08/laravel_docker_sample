@@ -20,6 +20,8 @@ class CreateTimesheetsTable extends Migration
             $table->date('date');
             $table->datetime('time_in');
             $table->datetime('time_out')->nullable();
+            $table->string('time_in_ip');
+            $table->string('time_out_ip');
             $table->text('remarks')->nullable();
             $table->timestamps();
         });

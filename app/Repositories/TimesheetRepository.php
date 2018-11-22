@@ -27,14 +27,14 @@ class TimesheetRepository extends BaseRepository implements RepositoryInterface
     public function getUsersTimesheetSummary()
     {
         $users = DB::table('users')
-            ->join('model_has_roles', 'users.id', 'model_has_roles.model_id')
-            ->join('roles', 'model_has_roles.role_id', 'roles.id')
+            ->leftJoin('model_has_roles', 'users.id', 'model_has_roles.model_id')
+            ->leftJoin('roles', 'model_has_roles.role_id', 'roles.id')
 
             ->leftJoin('departments', 'users.department_id', 'departments.id')
             ->leftJoin('positions', 'users.position_id', 'positions.id')
             ->leftJoin('timesheets', 'users.id', '=', 'timesheets.user_id')
             
-            ->where('roles.name', '!=', "admin")
+            ->where('roles.name', '!=', "admin")->orWhere('roles.name', null)
             ->select('users.id', 'users.name', 'users.created_at', 'departments.name as department', 'positions.title as position', DB::raw('MAX(timesheets.time_in) as last_time_in'))
             ->groupBy('users.id')
             ->get();
