@@ -13,6 +13,11 @@
         </div>
     </div>
 
+    @include('shared.modal_confirm', [
+        'title' => 'Delete',
+        'body'  => 'Are you sure you want to delete this Type of Leave?',
+        'btn_class' => 'btn-danger btn_delete_confirm'
+    ])
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -34,13 +39,14 @@
             <td>{{ $leave_type->name }}</td>
             <td>{{ $leave_type->description }}</td>
             <td>
-                <form action="{{ route('leave-types.destroy', $leave_type->id) }}" method="POST">
+                <form action="{{ route('leave-types.destroy', $leave_type->id) }}" method="POST" id="leave-type-form-delete-{{ $leave_type->id }}">
                     <a class="btn btn-info" href="{{ route('leave-types.show', $leave_type->id) }}">Show</a>
                     <a class="btn btn-primary" href="{{ route('leave-types.edit', $leave_type->id) }}">Edit</a>
 
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a class="btn btn-danger btn_delete_confirm" href="#" data-formId="leave-type-form-delete-{{ $leave_type->id }}">Delete</a>
+                    <!-- <button type="submit" class="btn btn-danger">Delete</button> -->
                 </form>
             </td>
         </tr>

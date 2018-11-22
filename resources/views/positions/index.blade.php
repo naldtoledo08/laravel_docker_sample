@@ -15,6 +15,11 @@
         </div>
     </div>
 
+    @include('shared.modal_confirm', [
+        'title' => 'Delete',
+        'body'  => 'Are you sure you want to delete this position?',
+        'btn_class' => 'btn-danger btn_delete_confirm'
+    ])
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -36,7 +41,7 @@
             <td>{{ $position->title }}</td>
             <td>{{ $position->description }}</td>
             <td>
-                <form action="{{ route('positions.destroy',$position->id) }}" method="POST">
+                <form action="{{ route('positions.destroy',$position->id) }}" method="POST" id="position-form-delete-{{ $position->id }}">
                     <a class="btn btn-info" href="{{ route('positions.show',$position->id) }}">Show</a>
                     @can('position-edit')
                     <a class="btn btn-primary" href="{{ route('positions.edit',$position->id) }}">Edit</a>
@@ -46,7 +51,8 @@
                     @csrf
                     @method('DELETE')
                     @can('position-delete')
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a class="btn btn-danger btn_delete_confirm" href="#" data-formId="position-form-delete-{{ $position->id }}">Delete</a>
+                    <!-- <button type="submit" class="btn btn-danger">Delete</button> -->
                     @endcan
                 </form>
             </td>

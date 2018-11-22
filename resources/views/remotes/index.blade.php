@@ -13,6 +13,11 @@
         </div>
     </div>
 
+    @include('shared.modal_confirm', [
+        'title' => 'Delete',
+        'body'  => 'Are you sure you want to delete this Remote detail?',
+        'btn_class' => 'btn-danger btn_delete_confirm'
+    ])
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -36,13 +41,14 @@
             <td>{{ $remote->name }}</td>
             <td>{{ $remote->description }}</td>
             <td>
-                <form action="{{ route('remotes.destroy',$remote->id) }}" method="POST">
+                <form action="{{ route('remotes.destroy',$remote->id) }}" method="POST" id="remote-form-delete-{{ $remote->id }}">
                     <a class="btn btn-primary" href="{{ route('remotes.edit',$remote->id) }}">Edit</a>
 
                     @csrf
                     @method('DELETE')
 
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a class="btn btn-danger btn_delete_confirm" href="#" data-formId="remote-form-delete-{{ $remote->id }}">Delete</a>
+                    <!-- <button type="submit" class="btn btn-danger">Delete</button> -->
                 </form>
             </td>
         </tr>

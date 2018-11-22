@@ -8,7 +8,7 @@
                 <h2>Edit Position</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('departments.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('positions.index') }}"> Back</a>
             </div>
         </div>
     </div>

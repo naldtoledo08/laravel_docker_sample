@@ -35,4 +35,15 @@ $(document).ready(function() {
 	            form.submit();
 	        });
 	});
+
+	$('.btn_delete_confirm').click(function(e) {
+	    e.preventDefault();
+	    
+	    var form = $("#" + $(this).attr('data-formId'));
+
+	    $('#modal-confirm').modal({ backdrop: 'static', keyboard: false })
+	        .on('click', '.btn_delete_confirm', function(){
+	            form.submit();
+	        });
+	});
 });

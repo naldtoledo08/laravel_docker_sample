@@ -11,7 +11,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
-                <button type="button" class="btn btn-primary btn-confirm-approve-remote-access">Approve</button>
+                <button type="button" class="btn btn-info btn-confirm-approve-remote-access">Approve</button>
             </div>
         </div>
     </div>

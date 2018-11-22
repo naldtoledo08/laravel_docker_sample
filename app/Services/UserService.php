@@ -51,7 +51,9 @@ class UserService
         // Delete roles before assigning new ones
         $this->user->deleteRoles($id);
 
-        $user->assignRole($input['roles']);
+        if(isset($input['roles'])) {
+	        $user->assignRole($input['roles']);
+	    }
 	}
 
 	public function findUsersExceptAdmin()

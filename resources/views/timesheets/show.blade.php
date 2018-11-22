@@ -82,7 +82,7 @@
                 <form action="{{ route('timesheets.destroy',$timesheets[$date]->id) }}" method="POST" id="timesheet-form-delete-{{ $timesheets[$date]->id }}">
                     <input type="hidden" value="{{ $id }}" name="user_id">
                     <input type="hidden" value="{{ $timesheets[$date]->id }}" name="id">
-                    <a class="btn btn-primary" href="{{ route('timesheets.edit',$timesheets[$date]->id) }}">Edit</a>
+                    <!-- <a class="btn btn-primary" href="{{ route('timesheets.edit',$timesheets[$date]->id) }}">Edit</a> -->
                     @csrf
                     @method('DELETE')
                     <a class="btn btn-danger btn_delete_timein" href="#" data-timesheetId="{{ $timesheets[$date]->id }}">Delete</a>

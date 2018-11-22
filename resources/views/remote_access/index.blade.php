@@ -48,7 +48,7 @@
           <input type="hidden" value="{{ $row->id }}" name="id">
           <a class="btn btn-primary" href="{{ route('remote-access.edit', $row->id) }}">Edit</a>
           @csrf
-          <a class="btn btn-primary btn_approve_access" href="#" data-remoteAccessId="{{ $row->id }}">Approve</a>
+          <a class="btn btn-info btn_approve_access" href="#" data-remoteAccessId="{{ $row->id }}">Approve</a>
           <!-- <button type="submit" class="btn btn-danger">Delete</button> -->
         </form>
       @else
