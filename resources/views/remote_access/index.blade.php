@@ -43,14 +43,23 @@
     <td>{{ $row->reason }}</td>
     <td>{{ (($row->is_approve == 1) ? 'Yes' : 'No') }}</td>
     <td>
-
-      <form action="{{ route('approve_remote_access') }}" method="POST" id="remote-access-form-approve-{{ $row->id }}">
-        <input type="hidden" value="{{ $row->id }}" name="id">
-        <a class="btn btn-primary" href="{{ route('remote-access.edit', $row->id) }}">Edit</a>
-        @csrf
-        <a class="btn btn-primary btn_approve_access" href="#" data-remoteAccessId="{{ $row->id }}">Approve</a>
-        <!-- <button type="submit" class="btn btn-danger">Delete</button> -->
-      </form>
+      @if($row->is_approve != 1)
+        <form action="{{ route('approve_remote_access') }}" method="POST" id="remote-access-form-approve-{{ $row->id }}">
+          <input type="hidden" value="{{ $row->id }}" name="id">
+          <a class="btn btn-primary" href="{{ route('remote-access.edit', $row->id) }}">Edit</a>
+          @csrf
+          <a class="btn btn-primary btn_approve_access" href="#" data-remoteAccessId="{{ $row->id }}">Approve</a>
+          <!-- <button type="submit" class="btn btn-danger">Delete</button> -->
+        </form>
+      @else
+         <form action="{{ route('deny_remote_access') }}" method="POST" id="remote-access-form-deny-{{ $row->id }}">
+          <input type="hidden" value="{{ $row->id }}" name="id">
+          <a class="btn btn-primary" href="{{ route('remote-access.edit', $row->id) }}">Edit</a>
+          @csrf
+          <a class="btn btn-danger btn_deny_access" href="#" data-remoteAccessId="{{ $row->id }}">Deny</a>
+          <!-- <button type="submit" class="btn btn-danger">Delete</button> -->
+        </form>
+      @endif
     </td>
   </tr>
  @endforeach

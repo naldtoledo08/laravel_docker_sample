@@ -26,4 +26,13 @@ $(document).ready(function() {
 	            form.submit();
 	        });
 	});
+
+	$('.btn_deny_access').click(function(e) {
+	    e.preventDefault();
+	    var form = $("#remote-access-form-deny-" + $(this).attr('data-remoteAccessId'));	    
+	    $('#confirm-deny-remote-access').modal({ backdrop: 'static', keyboard: false })
+	        .on('click', '.btn-confirm-deny-remote-access', function(){
+	            form.submit();
+	        });
+	});
 });

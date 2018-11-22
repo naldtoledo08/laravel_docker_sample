@@ -75,6 +75,14 @@ class RemoteAccessUserController extends Controller
                         ->with('success','User remote access approved successfully');
     }
 
+    public function deny(Request $request)
+    {
+        $this->remoteAccessRepo->update(['is_approve'=> 0], $request->id);
+        
+        return redirect()->route('remote-access.index')
+                        ->with('success','User remote access denied successfully');
+    }
+
     /**
      * Display the specified resource.
      *

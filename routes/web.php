@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function() {
     Route::resource('leave-types', 'LeaveTypeController');
     Route::resource('remote-access', 'RemoteAccessUserController');
     Route::post('remote-access/approve','RemoteAccessUserController@approve')->name('approve_remote_access');  
+    Route::post('remote-access/deny','RemoteAccessUserController@deny')->name('deny_remote_access');  
 });
 
 
