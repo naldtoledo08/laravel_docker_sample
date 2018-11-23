@@ -3,15 +3,18 @@
 namespace App\Services;
 
 use App\Repositories\UserRepository;
+use App\Repositories\EmployeeScheduleRepository;
 use Hash;
 
 class UserService
 {
 	private $user;
+	private $empScheduleRepo;
 
-	public function __construct(UserRepository $user)
+	public function __construct(UserRepository $user, EmployeeScheduleRepository $empScheduleRepo)
 	{
 		$this->user = $user;
+		$this->empScheduleRepo = $empScheduleRepo;
 	}
 
 	public function create($input)
@@ -22,6 +25,8 @@ class UserService
                 
         if(isset($input['roles'])) {
         	$user->assignRole($input['roles']);
+        }else{
+        	$this->setDefaultSchedule($user->id);
         }
 
         return $user;
@@ -53,7 +58,9 @@ class UserService
 
         if(isset($input['roles'])) {
 	        $user->assignRole($input['roles']);
-	    }
+	    } else {
+        	$this->setDefaultSchedule($user->id);
+        }
 	}
 
 	public function findUsersExceptAdmin()
@@ -69,6 +76,24 @@ class UserService
 	public function resetPassword($email, $token)
 	{
 		
+	}
+
+	public function setDefaultSchedule($user_id)
+	{
+		return $this->empScheduleRepo->firstOrCreate([
+			'user_id' => $user_id,
+			'type' => 'semi-flexible',
+			'from' => '08:00',
+			'from_flex' => '09:00',
+			'to' => '17:00',
+			'to_flex' => '18:00',
+			'shift_id' => 1
+		]);
+	}
+
+	public function getUserAllInfo($id)
+	{
+		return $this->user->getUserAllInfo($id);
 	}
 
 

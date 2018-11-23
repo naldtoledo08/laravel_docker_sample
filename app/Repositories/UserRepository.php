@@ -25,4 +25,9 @@ class UserRepository extends BaseRepository implements RepositoryInterface
         return $this->model::pluck('name','id')->all();
     }
 
+    public function getUserAllInfo($id){
+        return $this->model->where('id', $id)
+                ->with('employee_schedule')->first();
+    }
+
 }

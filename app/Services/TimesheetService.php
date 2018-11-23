@@ -34,7 +34,7 @@ class TimesheetService
 
 	public function login($data)
 	{
-		$data['time_in'] = date('Y-m-d h:i:s');
+		$data['time_in'] = date('Y-m-d H:i:s');
 		$data['time_in_ip'] = \Request::ip();
 
         $result = $this->timesheetRepo->create($data);
@@ -43,7 +43,7 @@ class TimesheetService
 
 	public function logout($data)
 	{
-		$data['time_out'] = date('Y-m-d h:i:s');
+		$data['time_out'] = date('Y-m-d H:i:s');
 		$data['time_out_ip'] = \Request::ip();
 
         $timesheet = $this->timesheetRepo->findByParams([

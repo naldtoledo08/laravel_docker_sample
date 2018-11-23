@@ -25,6 +25,10 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::resource('timesheets','TimesheetController');   
     Route::post('timesheets/login','TimesheetController@login')->name('timesheet_login');
     Route::post('timesheets/logout','TimesheetController@logout')->name('timesheet_logout');
+
+    Route::get('users/{user_id}/schedule', 'UserController@schedule')->name('user_schedule');
+    Route::get('users/{user_id}/profile', 'UserController@profile')->name('user_profile');
+    Route::put('users/{user_id}/schedule', 'UserController@schedule_update')->name('schedule_update');
 });
 
 Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function() {

@@ -3,25 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Department;
+// use App\Models\User;
+// use App\Models\Department;
 use Spatie\Permission\Models\Role;
 use DB;
 use App\Services\UserService;
+use App\Services\TimesheetService;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\PositionRepository;
-
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
     private $userService;
+    private $timesheetService;
     private $department;
     private $position;
     private $paginate = 20;
 
-    public function __construct(DepartmentRepository $department, PositionRepository $position, UserService $userService)
+    public function __construct(DepartmentRepository $department, PositionRepository $position, UserService $userService, TimesheetService $timesheetService)
     {
         $this->userService = $userService;
+        $this->timesheetService = $timesheetService;
         $this->department = $department;
         $this->position = $position;
     }
@@ -152,5 +155,41 @@ class UserController extends Controller
         
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
+    }
+
+
+    public function schedule(Request $request, $user_id)
+    {
+        $user = $this->userService->find($user_id);
+        $schedule = $user->employee_schedule();
+
+        return view('users.schedule', compact('user', 'schedule'));
+    }
+
+    public function schedule_update(Request $request, $user_id)
+    {
+        $user = $this->userService->find($user_id);
+        $schedule = $user->employee_schedule();
+
+        return view('users.schedule', compact('user', 'schedule'));
+    }
+
+
+    public function profile(Request $request, $user_id)
+    {
+       if (Gate::allows('do-action-if-user-or-admin', $user_id)) {
+            
+            $dates = $this->timesheetService->getDaysBefore(10);
+            $timesheets = $this->timesheetService->getInitialData($user_id);
+            $user = $this->userService->getUserAllInfo($user_id);
+
+            return view('users.profile', compact('user','timesheets', 'dates'));
+
+        }else{
+            return redirect()->route('dashboard')
+                        ->with('warning','You are not allowed to accesss other Profile.');
+        }
+
+        
     }
 }

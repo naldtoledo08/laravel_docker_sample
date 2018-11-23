@@ -42,3 +42,16 @@ if (!function_exists('is_route_active')) {
         return Request::is($route) ? 'active' : '';
     }
 }
+
+if (!function_exists('display_shift_time')) {
+    function display_shift_time($time, $time_flex)
+    {
+        $time = display_time('2010-01-01 '.$time);
+
+        if(isset($time_flex) && $time_flex) {
+            $time .= ' - '.display_time('2010-01-01 '.$time_flex);
+        }
+        
+        return $time;
+    }
+}

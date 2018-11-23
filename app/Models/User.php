@@ -48,4 +48,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo('App\Models\Position');
     }
+
+    /**
+     *  Get the schedule associated to the user
+     */
+    public function employee_schedule()
+    {
+        return $this->hasOne('App\Models\EmployeeSchedule');
+    }
 }

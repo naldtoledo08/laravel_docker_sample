@@ -39,7 +39,7 @@
    @foreach ($users as $key => $user)
     <tr>
       <td>{{ ++$i }}</td>
-      <td>{{ $user->name }}</td>
+      <td><a href="{{ route('user_profile',$user->id) }}">{{ $user->name }}</a></td>
       <td>{{ $user->email }}</td>
       <td>
         @if(!empty($user->getRoleNames()))
@@ -51,7 +51,6 @@
       <td>{{ $user->department ? $user->department->name : ''  }}</td>
       <td>{{ $user->position ? $user->position->title : '' }}</td>
       <td>
-
         <form action="{{ route('users.destroy',$user->id) }}" method="POST" id="user-form-delete-{{ $user->id }}">
           <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
           <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
