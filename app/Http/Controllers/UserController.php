@@ -161,17 +161,17 @@ class UserController extends Controller
     public function schedule(Request $request, $user_id)
     {
         $user = $this->userService->find($user_id);
-        $schedule = $user->employee_schedule();
-
-        return view('users.schedule', compact('user', 'schedule'));
+        $employee_schedule = $user->employee_schedule()->first();
+      
+        return view('users.schedule', compact('user', 'employee_schedule'));
     }
 
     public function schedule_update(Request $request, $user_id)
     {
         $user = $this->userService->find($user_id);
-        $schedule = $user->employee_schedule();
+        $employee_schedule = $user->employee_schedule();
 
-        return view('users.schedule', compact('user', 'schedule'));
+        return view('users.schedule', compact('user', 'employee_schedule'));
     }
 
 

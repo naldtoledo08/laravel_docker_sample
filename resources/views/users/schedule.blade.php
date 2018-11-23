@@ -13,7 +13,7 @@
     </div>
 </div>
 
-
+{!! Form::model($employee_schedule, ['method' => 'PATCH','route' => ['schedule_update', $user->id]]) !!}
 <form action="{{ route('schedule_update', $user->id) }}" method="POST">
     @csrf
     @method('PUT')
@@ -25,10 +25,37 @@
                 <input type="text" name="name" readonly="true" value="{{ $user->name }}" class="form-control">
             </div>
         </div>
+
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Remarks:</strong>
-                <textarea class="form-control" style="height:150px" name="remarks" placeholder="Remarks"></textarea>
+                <strong>From:</strong>
+                {!! Form::text('from', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>From flex:</strong>
+                {!! Form::text('from_flex', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>To:</strong>
+                {!! Form::text('to', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>To flex:</strong>
+                {!! Form::text('to_flex', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Reason:</strong>
+                {!! Form::textarea('reason', null, array('placeholder' => 'Please type your reason here!','class' => 'form-control')) !!}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
