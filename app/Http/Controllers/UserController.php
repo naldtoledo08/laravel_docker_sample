@@ -167,11 +167,18 @@ class UserController extends Controller
     }
 
     public function schedule_update(Request $request, $user_id)
-    {
-        $user = $this->userService->find($user_id);
-        $employee_schedule = $user->employee_schedule();
+    {        
+        $this->validate($request, [
+            'from' => 'required',
+            'to' => 'required',
+        ]);
 
-        return view('users.schedule', compact('user', 'employee_schedule'));
+        $input = $request->all();
+       
+        $employee_schedule = $this->userService->updateSchedule($input, $input['id']);
+
+        return redirect()->route('schedule_update', $input['user_id'])
+                        ->with('success','User schedule updated successfully');
     }
 
 

@@ -13,6 +13,24 @@
     </div>
 </div>
 
+
+@if (count($errors) > 0)
+  <div class="alert alert-danger">
+    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+    <ul>
+       @foreach ($errors->all() as $error)
+         <li>{{ $error }}</li>
+       @endforeach
+    </ul>
+  </div>
+@endif
+
+@if ($message = Session::get('success'))
+    <div class="alert alert-success">
+      <p>{{ $message }}</p>
+    </div>
+@endif
+
 {!! Form::model($employee_schedule, ['method' => 'PATCH','route' => ['schedule_update', $user->id]]) !!}
 <form action="{{ route('schedule_update', $user->id) }}" method="POST">
     @csrf
@@ -22,6 +40,8 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Name:</strong>
+                <input type="hidden" name="id" readonly="true" value="{{ $employee_schedule->id }}" class="form-control">
+                <input type="hidden" name="user_id" readonly="true" value="{{ $employee_schedule->user_id }}" class="form-control">
                 <input type="text" name="name" readonly="true" value="{{ $user->name }}" class="form-control">
             </div>
         </div>

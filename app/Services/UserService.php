@@ -91,6 +91,11 @@ class UserService
 		]);
 	}
 
+	public function updateSchedule($data, $id)
+	{
+		return $this->empScheduleRepo->update($data, $id);
+	}
+
 	public function getUserAllInfo($id)
 	{
 		return $this->user->getUserAllInfo($id);
