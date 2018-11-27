@@ -56,4 +56,13 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne('App\Models\EmployeeSchedule');
     }
+
+
+    /**
+     *  Get the leave history associated to the user
+     */
+    public function leave_credits()
+    {
+        return $this->hasMany('App\Models\LeaveCredit');
+    }
 }

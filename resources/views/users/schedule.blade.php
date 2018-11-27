@@ -48,6 +48,12 @@
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
+                <strong>Type:</strong>
+                {!! Form::select('type', $schedule_types, $employee_schedule->type, array('class' => 'form-control')) !!}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
                 <strong>From:</strong>
                 {!! Form::text('from', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
             </div>
@@ -69,6 +75,12 @@
             <div class="form-group">
                 <strong>To flex:</strong>
                 {!! Form::text('to_flex', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Shift:</strong>
+                {!! Form::select('shift_id', $shifts, $employee_schedule->shift_id, array('class' => 'form-control')) !!}
             </div>
         </div>
 

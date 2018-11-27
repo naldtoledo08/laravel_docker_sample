@@ -27,7 +27,9 @@ class UserRepository extends BaseRepository implements RepositoryInterface
 
     public function getUserAllInfo($id){
         return $this->model->where('id', $id)
-                ->with('employee_schedule')->first();
+                ->with('employee_schedule')
+                ->with('leave_credits')
+                ->first();
     }
 
 }

@@ -11,6 +11,7 @@ use App\Services\UserService;
 use App\Services\TimesheetService;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\PositionRepository;
+use App\Repositories\ShiftRepository;
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
@@ -18,14 +19,21 @@ class UserController extends Controller
     private $userService;
     private $timesheetService;
     private $department;
+    private $leaveTypeRepo;
+    private $shiftRepo;
     private $position;
     private $paginate = 20;
 
-    public function __construct(DepartmentRepository $department, PositionRepository $position, UserService $userService, TimesheetService $timesheetService)
+    public function __construct(DepartmentRepository $department,
+                                PositionRepository $position,
+                                UserService $userService,
+                                TimesheetService $timesheetService,
+                                ShiftRepository $shiftRepo)
     {
         $this->userService = $userService;
         $this->timesheetService = $timesheetService;
         $this->department = $department;
+        $this->shiftRepo = $shiftRepo;
         $this->position = $position;
     }
 
@@ -162,8 +170,11 @@ class UserController extends Controller
     {
         $user = $this->userService->find($user_id);
         $employee_schedule = $user->employee_schedule()->first();
-      
-        return view('users.schedule', compact('user', 'employee_schedule'));
+        
+        $shifts = $this->shiftRepo->pluck();
+        $schedule_types = ['fixed'=>'fixed', 'semi-flexible'=>'semi-flexible', 'flexible'=>'flexible']; // getScheduleTypes();
+
+        return view('users.schedule', compact('user', 'employee_schedule', 'schedule_types', 'shifts'));
     }
 
     public function schedule_update(Request $request, $user_id)
@@ -189,8 +200,9 @@ class UserController extends Controller
             $dates = $this->timesheetService->getDaysBefore(10);
             $timesheets = $this->timesheetService->getInitialData($user_id);
             $user = $this->userService->getUserAllInfo($user_id);
+            $leaves_per_type = $this->userService->getRemainingLeavesPerType($user_id);
 
-            return view('users.profile', compact('user','timesheets', 'dates'));
+            return view('users.profile', compact('user','timesheets', 'dates', 'leaves_per_type'));
 
         }else{
             return redirect()->route('dashboard')

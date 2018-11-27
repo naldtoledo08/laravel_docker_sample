@@ -4,17 +4,22 @@ namespace App\Services;
 
 use App\Repositories\UserRepository;
 use App\Repositories\EmployeeScheduleRepository;
+use App\Repositories\LeaveCreditRepository;
 use Hash;
 
 class UserService
 {
 	private $user;
 	private $empScheduleRepo;
+	private $leaveCreditRepo;
 
-	public function __construct(UserRepository $user, EmployeeScheduleRepository $empScheduleRepo)
+	public function __construct(UserRepository $user,
+								EmployeeScheduleRepository $empScheduleRepo,
+								LeaveCreditRepository $leaveCreditRepo)
 	{
 		$this->user = $user;
 		$this->empScheduleRepo = $empScheduleRepo;
+		$this->leaveCreditRepo = $leaveCreditRepo;
 	}
 
 	public function create($input)
@@ -101,6 +106,9 @@ class UserService
 		return $this->user->getUserAllInfo($id);
 	}
 
-
-
+	public function getRemainingLeavesPerType($user_id)
+	{
+		return $this->leaveCreditRepo->getRemainingLeavesPerType($user_id);
+	}
+	
 }

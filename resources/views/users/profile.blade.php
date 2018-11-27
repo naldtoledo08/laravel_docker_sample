@@ -37,13 +37,22 @@
 				         <label class="col-sm-2 col-form-label text-right"  for="name">Date join :</label>
 				         <span>{{ display_date($user->created_at) }}</span>
 				    </div>
-				</div>					
+				</div>
 				<div class="form-inline">
 				    <div class="col-md-12 form-group">
 				         <label class="col-sm-2 col-form-label text-right"  for="name">Address :</label>
 				         <span> </span>
 				    </div>
 				</div>
+
+				@foreach($leaves_per_type as $row)
+				<div class="form-inline">
+				    <div class="col-md-12 form-group">
+				         <label class="col-sm-2 col-form-label text-right"  for="name">{{ $row->code }} :</label>
+				         <span> {{ $row->remaining_leave }} </span>
+				    </div>
+				</div>
+				@endforeach
 				
 			</div>
 		</div>
@@ -84,6 +93,47 @@
 	</div>
 </div>
 
+<!-- Leave History -->
+<div class="row">
+	<div class="col-md-12 form-group">
+		<div class="card">
+			<div class="card-header d-flex align-items-center">
+				<h4>Leave History</h4>
+			</div>
+			<div class="card-body">
+				<table class="table table-bordered">
+			        <tr>
+			            <th>No. of day(s)</th>
+			            <th>Type</th>
+			            <th>From</th>
+			            <th>To</th>
+			            <th>Approve</th>
+			            @role('admin')
+			            <th>Action</th>
+			            @endrole
+			        </tr>
+			        @if($user->leave_credits)
+			        @foreach ($user->leave_credits as $leave)
+			        <tr>
+			            <td>{{ $leave->num_of_days }}</td>
+			            <td>{{ $leave->leaveType->name }}</td>
+			            <td>{{ display_date($leave->from) }}</td>
+			            <td>{{ display_date($leave->to) }}</td>
+			            <td>{{ (($leave->is_approve == 1) ? 'Yes' : 'No') }}</td>
+			            
+			            @role('admin')
+			            <td></td>
+			            @endrole			           
+			        </tr>
+			        @endforeach	
+			        @endif
+			    </table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Timesheet Summary -->
 <div class="row">
 	<div class="col-md-12 form-group">
 		<div class="card">
