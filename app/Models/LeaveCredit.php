@@ -8,7 +8,7 @@ class LeaveCredit extends Model
 {
     protected $table = 'leave_credits';
     protected $fillable = [
-    	'user_id', 'leave_type_id', 'description', 'nb_of_days', 'from', 'to', 'description'
+    	'user_id', 'leave_type_id', 'description', 'num_of_days', 'from', 'to', 'description'
     ];
 
     public function leaveType()

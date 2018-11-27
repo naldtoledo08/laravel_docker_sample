@@ -97,8 +97,17 @@
 <div class="row">
 	<div class="col-md-12 form-group">
 		<div class="card">
+			    
 			<div class="card-header d-flex align-items-center">
-				<h4>Leave History</h4>
+				
+				<div class="col-lg-12 margin-tb">
+			        <div class="pull-left">
+			           <h4>Leave History</h4>
+			        </div>
+			        <div class="pull-right">
+			            <a class="btn-sm btn-primary" href="{{ route('file_leave', $user->id) }}"> File a leave</a>
+			        </div>
+			    </div>
 			</div>
 			<div class="card-body">
 				<table class="table table-bordered">

@@ -110,5 +110,12 @@ class UserService
 	{
 		return $this->leaveCreditRepo->getRemainingLeavesPerType($user_id);
 	}
+
+	public function createLeave($data)
+	{
+		return $this->leaveCreditRepo->create($data);
+	}
+
+
 	
 }

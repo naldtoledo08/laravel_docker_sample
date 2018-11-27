@@ -12,6 +12,7 @@ use App\Services\TimesheetService;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\PositionRepository;
 use App\Repositories\ShiftRepository;
+use App\Repositories\LeaveTypeRepository;
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
@@ -28,12 +29,14 @@ class UserController extends Controller
                                 PositionRepository $position,
                                 UserService $userService,
                                 TimesheetService $timesheetService,
+                                LeaveTypeRepository $leaveTypeRepo,
                                 ShiftRepository $shiftRepo)
     {
         $this->userService = $userService;
         $this->timesheetService = $timesheetService;
         $this->department = $department;
         $this->shiftRepo = $shiftRepo;
+        $this->leaveTypeRepo = $leaveTypeRepo;
         $this->position = $position;
     }
 
@@ -190,6 +193,28 @@ class UserController extends Controller
 
         return redirect()->route('schedule_update', $input['user_id'])
                         ->with('success','User schedule updated successfully');
+    }
+
+    public function file_leave(Request $request, $user_id)
+    {
+        $leave_types = $this->leaveTypeRepo->pluck();
+        return view('users.file_leave', compact('user_id', 'leave_types'));
+    }
+
+    public function file_leave_create(Request $request, $user_id)
+    {
+        $this->validate($request, [
+            'from' => 'required',
+            'to' => 'required',
+            'description' => 'required',
+        ]);
+        $input = $request->all();
+
+        $this->userService->createLeave($input, $user_id);
+
+        return redirect()->route('user_profile', $user_id)
+                        ->with('success','User file leave successfully');
+
     }
 
 

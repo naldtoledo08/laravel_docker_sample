@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::get('users/{user_id}/schedule', 'UserController@schedule')->name('user_schedule');
     Route::get('users/{user_id}/profile', 'UserController@profile')->name('user_profile');
     Route::put('users/{user_id}/schedule', 'UserController@schedule_update')->name('schedule_update');
+    Route::get('users/{user_id}/file_leave', 'UserController@file_leave')->name('file_leave');
+    Route::post('users/{user_id}/file_leave_create', 'UserController@file_leave_create')->name('file_leave_create');
 });
 
 Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function() {
