@@ -68,6 +68,12 @@ class UserService
         }
 	}
 
+	public function verify($user_id)
+	{
+		$date = date('Y-m-d h:i:s', strtotime('now'));
+		return $this->user->update(['email_verified_at' => $date], $user_id);
+	}
+
 	public function findUsersExceptAdmin()
 	{
 		return $this->user->findUsersExceptAdmin();
@@ -114,6 +120,11 @@ class UserService
 	public function createLeave($data)
 	{
 		return $this->leaveCreditRepo->create($data);
+	}
+
+	public function updateLeave($data, $id)
+	{
+		return $this->leaveCreditRepo->update($data, $id);
 	}
 
 

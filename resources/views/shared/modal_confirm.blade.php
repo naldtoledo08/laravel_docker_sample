@@ -1,5 +1,5 @@
 <!-- Modal-->
-<div id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="confirmModal" aria-hidden="true" class="modal fade text-left">
+<div id="{{ (isset($modal_id) ? $modal_id : 'modal-confirm') }}" tabindex="-1" role="dialog" aria-labelledby="confirmModal" aria-hidden="true" class="modal fade text-left">
     <div role="document" class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

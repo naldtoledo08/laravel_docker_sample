@@ -19,6 +19,13 @@
       'btn_class' => 'btn-danger btn_delete_confirm'
   ])
 
+  @include('shared.modal_confirm', [
+      'modal_id' => 'verify-user-modal',
+      'title' => 'Verify',
+      'body'  => 'Are you sure you want to verify this user?',
+      'btn_class' => 'btn-primary btn_verify_confirm'
+  ])
+
   @if ($message = Session::get('success'))
     <div class="alert alert-success">
       <p>{{ $message }}</p>
@@ -34,6 +41,7 @@
      <th>Roles</th>
      <th>Department</th>
      <th>Position</th>
+     <th>Verified at</th>
      <th width="280px">Action</th>
    </tr>
    @foreach ($users as $key => $user)
@@ -50,6 +58,16 @@
       </td>
       <td>{{ $user->department ? $user->department->name : ''  }}</td>
       <td>{{ $user->position ? $user->position->title : '' }}</td>
+      <td>
+        @if($user->email_verified_at)
+          {{ display_date($user->email_verified_at) }}
+        @else
+          <form action="{{ route('user_verify', $user->id) }}" method="POST" id="user-form-verify-{{ $user->id }}">
+            <a class="btn_verify_user" href="#" data-userId="{{ $user->id }}">Verify</a>
+            @csrf
+          </form>
+        @endif
+      </td>
       <td>
         <form action="{{ route('users.destroy',$user->id) }}" method="POST" id="user-form-delete-{{ $user->id }}">
           <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>

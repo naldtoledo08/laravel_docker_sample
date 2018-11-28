@@ -2,6 +2,15 @@
 
 
 @section('content')
+
+@include('users.profile.modal')
+
+ @if ($message = Session::get('success'))
+    <div class="alert alert-success">
+        <p>{{ $message }}</p>
+    </div>
+@endif
+
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
@@ -131,7 +140,21 @@
 			            <td>{{ (($leave->is_approve == 1) ? 'Yes' : 'No') }}</td>
 			            
 			            @role('admin')
-			            <td></td>
+			            <td>
+						    @if($leave->is_approve != 1)
+						        <form action="{{ route('approve_leave', $user->id) }}" method="POST" id="leave-form-approve-{{ $leave->id }}">
+						          <input type="hidden" value="{{ $leave->id }}" name="id">
+						          @csrf
+						          <a class="btn btn-info btn_approve_leave" href="#" data-leaveId="{{ $leave->id }}">Approve</a>
+						        </form>
+						      @else
+						         <form action="{{ route('deny_leave', $user->id) }}" method="POST" id="leave-form-deny-{{ $leave->id }}">
+						          <input type="hidden" value="{{ $leave->id }}" name="id">
+						          @csrf
+						          <a class="btn btn-danger btn_deny_leave" href="#" data-leaveId="{{ $leave->id }}">Deny</a>
+						        </form>
+						      @endif
+			            </td>
 			            @endrole			           
 			        </tr>
 			        @endforeach	

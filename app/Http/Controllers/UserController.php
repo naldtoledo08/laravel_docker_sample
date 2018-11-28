@@ -232,8 +232,29 @@ class UserController extends Controller
         }else{
             return redirect()->route('dashboard')
                         ->with('warning','You are not allowed to accesss other Profile.');
-        }
+        }        
+    }
 
+    public function approve_leave(Request $request, $user_id)
+    {
+        $this->userService->updateLeave(['is_approve'=> 1], $request->id);
         
+        return redirect()->route('user_profile', $user_id)
+                        ->with('success','User leave approved successfully');
+    }
+
+    public function deny_leave(Request $request, $user_id)
+    {
+        $this->userService->updateLeave(['is_approve'=> 0], $request->id);
+        
+        return redirect()->route('user_profile', $user_id)
+                        ->with('success','User leave denied successfully');
+    }
+    public function verify(Request $request, $user_id)
+    {
+        $this->userService->verify($user_id);
+        
+        return redirect()->route('users.index')
+                        ->with('success','User verified successfully');
     }
 }

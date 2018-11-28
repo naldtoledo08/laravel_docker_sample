@@ -46,4 +46,37 @@ $(document).ready(function() {
 	            form.submit();
 	        });
 	});
+
+
+
+
+	$('.btn_approve_leave').click(function(e) {
+	    e.preventDefault();
+	    console.log('btn_approve_leave');
+	    var form = $("#leave-form-approve-" + $(this).attr('data-leaveId'));	    
+	    $('#confirm-approve-leave').modal({ backdrop: 'static', keyboard: false })
+	        .on('click', '.btn-confirm-approve-leave', function(){
+	            form.submit();
+	        });
+	});
+
+	$('.btn_deny_leave').click(function(e) {
+	    e.preventDefault();
+	    var form = $("#leave-form-deny-" + $(this).attr('data-leaveId'));	    
+	    $('#confirm-deny-leave').modal({ backdrop: 'static', keyboard: false })
+	        .on('click', '.btn-confirm-deny-leave', function(){
+	            form.submit();
+	        });
+	});
+
+
+
+	$('.btn_verify_user').click(function(e) {
+	    e.preventDefault();
+	    var form = $("#user-form-verify-" + $(this).attr('data-userId'));	    
+	    $('#verify-user-modal').modal({ backdrop: 'static', keyboard: false })
+	        .on('click', '.btn_verify_confirm', function(){
+	            form.submit();
+	        });
+	});
 });
