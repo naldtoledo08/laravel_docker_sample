@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('do-action-if-user-or-admin', function (User $user, $user_id) {
-            return ($user->id == $user_id || $user->roles->first()->name == "admin");
+            return ($user->id == $user_id || (isset($user->roles) && $user->roles->first() && $user->roles->first()->name == "admin"));
         });
 
         Gate::define('remote-access', 'App\Policies\RemotePolicy@remote_access');

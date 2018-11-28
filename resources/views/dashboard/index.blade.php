@@ -2,6 +2,12 @@
 
 
 @section('content')
+@if ($message = Session::get('warning'))
+    <div class="alert alert-warning">
+        <p>{{ $message }}</p>
+    </div>
+@endif
+
 <section class="dashboard-counts section-padding">
         <div class="container-fluid">
           <div class="row">

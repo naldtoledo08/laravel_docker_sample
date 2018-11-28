@@ -38,6 +38,14 @@ class UserController extends Controller
         $this->shiftRepo = $shiftRepo;
         $this->leaveTypeRepo = $leaveTypeRepo;
         $this->position = $position;
+
+        $this->middleware('can:do-action-if-user-or-admin,user_id', 
+                    ['only' => 
+                            ['schedule',
+                            'schedule_update',
+                            'file_leave',
+                            'file_leave_create']
+                    ]);
     }
 
     /**
@@ -232,7 +240,7 @@ class UserController extends Controller
         }else{
             return redirect()->route('dashboard')
                         ->with('warning','You are not allowed to accesss other Profile.');
-        }        
+        }
     }
 
     public function approve_leave(Request $request, $user_id)
