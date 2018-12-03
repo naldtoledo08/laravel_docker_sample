@@ -7,9 +7,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    use Sluggable;
     use Notifiable;
     use HasRoles;
     use SoftDeletes;
@@ -19,9 +21,23 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'department_id', 'position_id', 'email_verified_at'
+        'email', 'firstname', 'lastname', 'slug', 'password', 'department_id', 'position_id', 'email_verified_at'
     ];
 
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => ['firstname', 'lastname']
+            ]
+        ];
+    }
+    
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -64,5 +80,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function leave_credits()
     {
         return $this->hasMany('App\Models\LeaveCredit');
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->firstname . ' ' . $this->lastname;
     }
 }

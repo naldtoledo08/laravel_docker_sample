@@ -87,7 +87,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
             'department_id' => 'required',
             'position_id' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -146,7 +147,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
             // 'roles' => 'required'
@@ -216,6 +218,7 @@ class UserController extends Controller
             'to' => 'required',
             'description' => 'required',
         ]);
+
         $input = $request->all();
 
         $this->userService->createLeave($input, $user_id);
@@ -226,9 +229,10 @@ class UserController extends Controller
     }
 
 
-    public function profile(Request $request, $user_id)
+    public function profile(Request $request, $user_id, $slug)
     {
-       if (Gate::allows('do-action-if-user-or-admin', $user_id)) {
+        
+        if (Gate::allows('do-action-if-user-or-admin', $user_id)) {
             
             $dates = $this->timesheetService->getDaysBefore(10);
             $timesheets = $this->timesheetService->getInitialData($user_id);

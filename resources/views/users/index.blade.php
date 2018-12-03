@@ -47,7 +47,7 @@
    @foreach ($users as $key => $user)
     <tr>
       <td>{{ ++$i }}</td>
-      <td><a href="{{ route('user_profile',$user->id) }}">{{ $user->name }}</a></td>
+      <td><a href="{{ route('user_profile', [$user->id, $user->slug]) }}">{{ $user->firstname. ' '.$user->lastname }}</a></td>
       <td>{{ $user->email }}</td>
       <td>
         @if(!empty($user->getRoleNames()))

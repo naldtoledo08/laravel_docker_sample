@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>{{ $user->name }} Profile</h2>
+            <h2>{{ $user->firstname . ' ' . $user->lastname }} Profile</h2>
         </div>
         <div class="pull-right">
             <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}"> Edit Info</a>
@@ -32,7 +32,7 @@
 				<div class="form-inline">
 				    <div class="col-md-12 form-group">
 				         <label class="col-sm-2 col-form-label"  for="name">Name :</label>
-				         <span>{{ $user->name }}</span>
+				         <span>{{ $user->firstname . ' ' . $user->lastname }}</span>
 				    </div>
 				</div>
 				<div class="form-inline">

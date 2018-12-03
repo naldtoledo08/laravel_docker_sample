@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>{{ $user->name }} Schedule</h2>
+            <h2>{{ $user->firstname . ' ' . $user->lastname }} Schedule</h2>
         </div>
         <div class="pull-right">
             <a class="btn btn-primary" href="{{ route('user_profile', $user->id) }}"> Back</a>
