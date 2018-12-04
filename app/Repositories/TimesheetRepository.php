@@ -35,7 +35,7 @@ class TimesheetRepository extends BaseRepository implements RepositoryInterface
             ->leftJoin('timesheets', 'users.id', '=', 'timesheets.user_id')
             
             ->where('roles.name', '!=', "admin")->orWhere('roles.name', null)
-            ->select('users.id', 'users.name', 'users.created_at', 'departments.name as department', 'positions.title as position', DB::raw('MAX(timesheets.time_in) as last_time_in'))
+            ->select('users.id', 'users.firstname', 'users.lastname', 'users.created_at', 'departments.name as department', 'positions.title as position', DB::raw('MAX(timesheets.time_in) as last_time_in'))
             ->groupBy('users.id')
             ->get();
 

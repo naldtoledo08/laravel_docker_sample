@@ -8,7 +8,7 @@
             <h2>{{ $user->firstname . ' ' . $user->lastname }} Schedule</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('user_profile', $user->id) }}"> Back</a>
+            <a class="btn btn-primary" href="{{ route('user_profile', [$user->id, $user->slug]) }}"> Back</a>
         </div>
     </div>
 </div>
@@ -42,7 +42,7 @@
                 <strong>Name:</strong>
                 <input type="hidden" name="id" readonly="true" value="{{ $employee_schedule->id }}" class="form-control">
                 <input type="hidden" name="user_id" readonly="true" value="{{ $employee_schedule->user_id }}" class="form-control">
-                <input type="text" name="name" readonly="true" value="{{ $user->name }}" class="form-control">
+                <input type="text" name="name" readonly="true" value="{{ $user->firstname . ' ' .$user->lastname }}" class="form-control">
             </div>
         </div>
 

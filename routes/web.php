@@ -46,7 +46,8 @@ Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function() {
     Route::post('remote-access/deny','RemoteAccessUserController@deny')->name('deny_remote_access');  
     Route::post('users/{user_id}/approve_leave','UserController@approve_leave')->name('approve_leave');  
     Route::post('users/{user_id}/deny_leave','UserController@deny_leave')->name('deny_leave');  
-    Route::post('users/{user_id}/verify','UserController@verify')->name('user_verify');  
+    Route::post('users/{user_id}/verify','UserController@verify')->name('user_verify'); 
+    Route::get('audits', 'AuditController@index')->name('audits');
 });
 
 

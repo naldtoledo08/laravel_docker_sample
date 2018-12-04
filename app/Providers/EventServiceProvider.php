@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        \OwenIt\Auditing\Events\Audited::class => [
+            \App\Listeners\AuditedListener::class
+        ],
     ];
 
     /**

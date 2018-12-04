@@ -163,6 +163,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class, 
     ],
 
     /*
