@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Timesheet - {{ $user->name }}</h2>
+                <h2>Timesheet - {{ $user->firstname . ' ' . $user->lastname }}</h2>
             </div>
             <!-- <div class="pull-right">
                 @can('department-create')

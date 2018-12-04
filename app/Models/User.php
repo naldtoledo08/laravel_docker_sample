@@ -8,13 +8,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cviebrock\EloquentSluggable\Sluggable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
     use Sluggable;
     use Notifiable;
     use HasRoles;
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
     /**
      * The attributes that are mass assignable.
      *
@@ -86,4 +88,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->firstname . ' ' . $this->lastname;
     }
+
+
+     /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditInclude = [
+        'email', 'firstname', 'lastname', 'department_id', 'position_id', 'email_verified_at'
+    ];
 }

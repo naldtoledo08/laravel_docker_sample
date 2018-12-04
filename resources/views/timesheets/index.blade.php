@@ -38,7 +38,7 @@
     @foreach ($users as $user)
     <tr>
         <td></td>
-        <td>{{ $user->name }}</td>
+        <td>{{ $user->firstname . ' ' . $user->lastname }}</td>
         <td>{{ $user->department ? $user->department : ''  }}</td>
         <td>{{ $user->position ? $user->position : '' }}</td>
         <td>{{ $user->last_time_in ? display_date_time($user->last_time_in) : '' }}</td>
