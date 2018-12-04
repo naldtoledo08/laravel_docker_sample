@@ -18,6 +18,7 @@
         </div>
         <div class="pull-right">
             <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}"> Edit Info</a>
+            <a class="btn btn-primary" href="{{ route('user_schedule', $user->id) }}"> Edit Schedule</a>
         </div>
     </div>
 </div>
@@ -166,6 +167,7 @@
 </div>
 
 <!-- Timesheet Summary -->
+@unlessrole('admin')
 <div class="row">
 	<div class="col-md-12 form-group">
 		<div class="card">
@@ -202,5 +204,6 @@
 		</div>
 	</div>
 </div>
+@endunlessrole
 
 @endsection

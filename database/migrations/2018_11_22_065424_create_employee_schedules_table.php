@@ -22,7 +22,7 @@ class CreateEmployeeSchedulesTable extends Migration
             $table->time('to');
             $table->time('to_flex');
             $table->integer('shift_id')->unsigned();
-            $table->text('remarks');
+            $table->text('remarks')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('shift_id')->references('id')->on('shifts')->onDelete('cascade');

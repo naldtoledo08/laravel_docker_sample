@@ -7,7 +7,7 @@
             <h2>File a leave</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('user_profile', $user_id) }}"> Back</a>
+            <a class="btn btn-primary" href="{{ route('user_profile', [$user->id, $user->slug]) }}"> Back</a>
         </div>
     </div>
 </div>
@@ -25,7 +25,7 @@
 @endif
 
 
-{!! Form::open(array('route' => ['file_leave_create', $user_id],'method'=>'POST')) !!}
+{!! Form::open(array('route' => ['file_leave_create', $user->id],'method'=>'POST')) !!}
 <div class="row">
 
     <div class="col-xs-12 col-sm-12 col-md-12">
@@ -37,7 +37,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>From:</strong>
-            <input type="hidden" name="user_id" readonly="true" value="{{ $user_id }}" class="form-control">
+            <input type="hidden" name="user_id" readonly="true" value="{{ $user->id }}" class="form-control">
             {!! Form::text('from', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
         </div>
     </div>

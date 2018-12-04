@@ -41,6 +41,16 @@ class RegisterController extends Controller
     }
 
     /**
+     * Overwriting trait to disable public registration using auth default registration page
+     *
+     */
+    public function showRegistrationForm()
+    {
+        return redirect('/');
+    }        
+
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data

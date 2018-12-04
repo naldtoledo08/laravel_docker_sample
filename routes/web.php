@@ -12,12 +12,16 @@
 */
 use App\Services\DBService;
 
+Route::get('register', function () {
+    return redirect()->route('/');
+});
+
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth', 'verified']], function() {
-    Route::get('dashboard','DashboardController@index')->name('dashboard');   
+    Route::get('dashboard','DashboardController@index')->name('dashboard');
     Route::resource('departments','DepartmentController');
     Route::resource('positions','PositionController');
     Route::resource('products','ProductController');    
@@ -52,8 +56,9 @@ Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function() {
 
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    //return view('welcome');
+    return redirect()->route('dashboard');
+})->middleware('auth');
 
 Route::get('/admin', function () {
 	

@@ -37,7 +37,7 @@
         <div class="sidenav-header d-flex align-items-center justify-content-center">
           <!-- User Info-->
           <div class="sidenav-header-inner text-center"><img src="{{ asset('theme/img//users/Ron.png') }}" alt="person" class="img-fluid rounded-circle">
-            <h2 class="h5">{{ Auth::user()->name }}</h2>
+            <h2 class="h5">{{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}</h2>
             @if (!empty(Auth::user()->position->title))
               <span>{{ Auth::user()->position->title }}</span>
             @endif            

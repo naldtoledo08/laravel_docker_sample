@@ -207,8 +207,9 @@ class UserController extends Controller
 
     public function file_leave(Request $request, $user_id)
     {
+        $user = $this->userService->find($user_id);
         $leave_types = $this->leaveTypeRepo->pluck();
-        return view('users.file_leave', compact('user_id', 'leave_types'));
+        return view('users.file_leave', compact('user', 'leave_types'));
     }
 
     public function file_leave_create(Request $request, $user_id)
