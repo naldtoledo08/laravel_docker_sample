@@ -94,6 +94,9 @@
               <li class="{{is_route_active('audits')}}">
                 <a href="{{ route('audits') }}"> <i class="icon-grid"></i>Audit Trail</a>
               </li>
+              <li class="{{is_route_active('monitoring')}}">
+                <a href="{{ route('monitoring') }}"> <i class="icon-grid"></i>Monitoring</a>
+              </li>
             @endrole
 
           </ul>

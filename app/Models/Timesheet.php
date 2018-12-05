@@ -23,4 +23,10 @@ class Timesheet extends Model implements Auditable
     protected $auditInclude = [
         'user_id', 'date', 'time_in', 'time_out', 'time_in_ip', 'time_out_ip', 'remarks'
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }
