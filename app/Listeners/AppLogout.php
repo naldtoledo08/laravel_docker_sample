@@ -2,12 +2,11 @@
 
 namespace App\Listeners;
 
+use App\Events\AppLogout;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use OwenIt\Auditing\Events\Audited;
-use Pusher\Laravel\Facades\Pusher;
 
-class AuditedListener
+class AppLogout
 {
     /**
      * Create the event listener.
@@ -22,13 +21,11 @@ class AuditedListener
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param  AppLogout  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(AppLogout $event)
     {
-        $audit = $event->audit->toArray();
-        $audit['user_name'] = $event->audit->user->full_name;
-        Pusher::trigger('audits', 'new-audit', ['audit' => $audit]);
+        //
     }
 }

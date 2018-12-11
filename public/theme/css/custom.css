@@ -1,2 +1,9 @@
 /* your styles go here */
 .col-form-label { text-align: right }
+#monitoring-container {
+	margin-top: 20px;
+}
+
+#monitoring-container .login-photo img{
+	max-height: 100px;
+}

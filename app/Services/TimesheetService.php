@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\TimesheetRepository;
 use Hash;
+use App\Events\TimesheetEvent;
 
 class TimesheetService
 {
@@ -38,21 +39,31 @@ class TimesheetService
 		$data['time_in_ip'] = \Request::ip();
 
         $result = $this->timesheetRepo->create($data);
+
+        event(new TimesheetEvent($result));
+
         return $result;
 	}
 
 	public function logout($data)
 	{
-		$data['time_out'] = date('Y-m-d H:i:s');
-		$data['time_out_ip'] = \Request::ip();
+		// $data['time_out'] = date('Y-m-d H:i:s');
+		// $data['time_out_ip'] = \Request::ip();
 
         $timesheet = $this->timesheetRepo->findByParams([
 	        				'user_id' => $data['user_id'],
 	        				'date' => $data['date'],
         				])->first();
 
-        $data['remarks'] = $timesheet->remarks . (($timesheet->remarks) ? ' \n' : '') . $data['remarks'];
-        $result = $timesheet->update($data);
+        $timesheet->time_out = date('Y-m-d H:i:s');
+        $timesheet->time_out_ip = \Request::ip();
+        $timesheet->remarks = $timesheet->remarks . (($timesheet->remarks) ? ' \n' : '') . $data['remarks'];
+
+        // $data['remarks'] = $timesheet->remarks . (($timesheet->remarks) ? ' \n' : '') . $data['remarks'];
+        // $result = $timesheet->update($data);
+        $result = $timesheet->save();
+
+        event(new TimesheetEvent($timesheet));
 
         return $result;
 	}

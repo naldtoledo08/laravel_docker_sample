@@ -22,7 +22,7 @@ class UserRepository extends BaseRepository implements RepositoryInterface
     }
 
     public function pluck(){
-        return $this->model::pluck('full_name','id')->all();
+        return $this->model->all()->pluck('full_name','id')->all();
     }
 
     public function getUserAllInfo($id){

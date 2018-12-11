@@ -222,9 +222,9 @@ class UserController extends Controller
 
         $input = $request->all();
 
-        $this->userService->createLeave($input, $user_id);
+        $result = $this->userService->createLeave($input, $user_id);
 
-        return redirect()->route('user_profile', $user_id)
+        return redirect()->route('user_profile', [$user_id, $result->user->slug])
                         ->with('success','User file leave successfully');
 
     }
@@ -250,9 +250,11 @@ class UserController extends Controller
 
     public function approve_leave(Request $request, $user_id)
     {
-        $this->userService->updateLeave(['is_approve'=> 1], $request->id);
+        $result = $this->userService->updateLeave(['is_approve'=> 1], $request->id);
         
-        return redirect()->route('user_profile', $user_id)
+        $user = $this->userService->find($user_id);
+
+        return redirect()->route('user_profile', [$user_id, $user->slug])
                         ->with('success','User leave approved successfully');
     }
 
@@ -260,7 +262,9 @@ class UserController extends Controller
     {
         $this->userService->updateLeave(['is_approve'=> 0], $request->id);
         
-        return redirect()->route('user_profile', $user_id)
+         $user = $this->userService->find($user_id);
+
+        return redirect()->route('user_profile', [$user_id, $user->slug])
                         ->with('success','User leave denied successfully');
     }
     public function verify(Request $request, $user_id)

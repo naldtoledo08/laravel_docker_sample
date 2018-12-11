@@ -44,7 +44,7 @@ class TimesheetRepository extends BaseRepository implements RepositoryInterface
 
     public function getLoginUsers()
     {
-        return $this->model->whereNull('time_out')->with('user')->get();
+        return $this->model->whereNull('time_out')->with('user')->orderBy('time_in', 'desc')->get();
 
     }
 }

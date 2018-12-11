@@ -18,7 +18,9 @@
         </div>
         <div class="pull-right">
             <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}"> Edit Info</a>
+            @role('admin')
             <a class="btn btn-primary" href="{{ route('user_schedule', $user->id) }}"> Edit Schedule</a>
+        	@endrole
         </div>
     </div>
 </div>
