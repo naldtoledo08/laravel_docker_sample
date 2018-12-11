@@ -21,6 +21,14 @@ class EventServiceProvider extends ServiceProvider
         \OwenIt\Auditing\Events\Audited::class => [
             \App\Listeners\AuditedListener::class
         ],
+        'App\Events\TimesheetEvent' => [
+            'App\Listeners\TimesheetEventListener',
+        ],
+        'App\Events\AppLogout' => [
+            'App\Listeners\AppLogout',
+            'App\Listeners\TimesheetEventListener',
+        ],
+
     ];
 
     /**

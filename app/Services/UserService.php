@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\UserRepository;
 use App\Repositories\EmployeeScheduleRepository;
 use App\Repositories\LeaveCreditRepository;
+use App\Repositories\TimesheetRepository;
 use Hash;
 
 class UserService
@@ -12,14 +13,17 @@ class UserService
 	private $user;
 	private $empScheduleRepo;
 	private $leaveCreditRepo;
+	private $timesheetRepo;
 
 	public function __construct(UserRepository $user,
 								EmployeeScheduleRepository $empScheduleRepo,
+								TimesheetRepository $timesheetRepo,
 								LeaveCreditRepository $leaveCreditRepo)
 	{
 		$this->user = $user;
 		$this->empScheduleRepo = $empScheduleRepo;
 		$this->leaveCreditRepo = $leaveCreditRepo;
+		$this->timesheetRepo = $timesheetRepo;
 	}
 
 	public function create($input)
@@ -127,6 +131,10 @@ class UserService
 		return $this->leaveCreditRepo->update($data, $id);
 	}
 
+	public function getCurrentLoginUsers()
+	{
+		return $this->timesheetRepo->getLoginUsers();
+	}
 
 	
 }

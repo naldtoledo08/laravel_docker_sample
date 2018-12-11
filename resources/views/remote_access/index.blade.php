@@ -37,7 +37,7 @@
  @foreach ($remote_access as $key => $row)
   <tr>
     <td>{{ ++$i }}</td>
-    <td>{{ $row->user->name }}</td>
+    <td>{{ $row->user->full_name }}</td>
     <td>{{ display_date($row->from) }}</td>
     <td>{{ display_date($row->to) }}</td>
     <td>{{ $row->reason }}</td>

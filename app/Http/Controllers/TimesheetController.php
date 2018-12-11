@@ -76,8 +76,8 @@ class TimesheetController extends Controller
                 'remarks' => $this->timesheetService->getRemarks($user , 'login')
             ];
 
-            $this->timesheetService->login($input);
-
+            $timesheet = $this->timesheetService->login($input);
+            
             return redirect()->route('timesheets.show', $user_id)
                             ->with('success','You are already Login.');
         } else {
@@ -94,6 +94,29 @@ class TimesheetController extends Controller
         $user = Auth::user();
 
         if (Gate::allows('do-action-if-user-or-admin', $user_id)  && $user->can('remote-access')) {
+
+            $input = $request->all();
+            
+            $input['remarks'] = $this->timesheetService->getRemarks($user , 'logout');
+
+            $this->timesheetService->logout($input);
+
+            return redirect()->route('timesheets.show', $user_id)
+                            ->with('success','You are already Logout.');
+        } else {
+            return redirect()->route('timesheets.show', $user->id)
+                        ->with('warning','You are not allowed to access other Timesheet.');
+        }
+    }
+
+    public function logout_old(Request $request)
+    {
+        $id = $request->id;
+        $user_id = $request->user_id;
+
+        $user = Auth::user();
+
+        if ($user->hasRole('admin')) {
 
             $input = $request->all();
             

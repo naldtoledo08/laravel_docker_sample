@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::resource('timesheets','TimesheetController');   
     Route::post('timesheets/login','TimesheetController@login')->name('timesheet_login');
     Route::post('timesheets/logout','TimesheetController@logout')->name('timesheet_logout');
+    Route::post('timesheets/logout_old','TimesheetController@logout_old')->name('timesheet_logout_old');
 
     Route::get('users/{user_id}/schedule', 'UserController@schedule')->name('user_schedule');
     Route::get('users/{user_id}/{slug}/profile', 'UserController@profile')->name('user_profile');
@@ -52,6 +53,7 @@ Route::group(['middleware' => ['auth', 'verified', 'role:admin']], function() {
     Route::post('users/{user_id}/deny_leave','UserController@deny_leave')->name('deny_leave');  
     Route::post('users/{user_id}/verify','UserController@verify')->name('user_verify'); 
     Route::get('audits', 'AuditController@index')->name('audits');
+    Route::get('monitoring', 'MonitoringController@index')->name('monitoring');
 });
 
 
