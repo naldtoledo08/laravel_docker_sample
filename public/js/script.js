@@ -1,5 +1,8 @@
 $(document).ready(function() {
 	//$('table[data-form="deleteForm"]').on('click', '.form-delete', function(e){
+
+
+	/*** Modal - Confirmation ***/
 	$('#btn_logout').click(function(e) {
 	    e.preventDefault();
 	    var form = $("#timesheet-logout-" + $(this).attr('data-timesheetId'));	    
@@ -47,9 +50,6 @@ $(document).ready(function() {
 	        });
 	});
 
-
-
-
 	$('.btn_approve_leave').click(function(e) {
 	    e.preventDefault();
 	    console.log('btn_approve_leave');
@@ -69,8 +69,6 @@ $(document).ready(function() {
 	        });
 	});
 
-
-
 	$('.btn_verify_user').click(function(e) {
 	    e.preventDefault();
 	    var form = $("#user-form-verify-" + $(this).attr('data-userId'));	    
@@ -79,4 +77,52 @@ $(document).ready(function() {
 	            form.submit();
 	        });
 	});
+	/*** Modal - Confirmation end ***/
+	
+	
+	/*** Datatables ***/
+    var userTable = $('#userTable').DataTable({
+    	"pageLength": 25,
+    	"columnDefs": [ { orderable: false, targets: [0] } ],
+    	"order": [[ 1, 'asc' ]],
+    	"initComplete": function(settings, json) {
+		    $('#userTable').show();
+		}
+  	});
+  	userTable.on( 'order.dt search.dt', function () {
+        userTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
+
+    var remoteAccessTable = $('#remoteAccessTable').DataTable({
+    	"pageLength": 25,
+    	"columnDefs": [ { orderable: false, targets: [0] } ],
+    	"order": [[ 1, 'asc' ]],
+    	"initComplete": function(settings, json) {
+		    $('#remoteAccessTable').show();
+		}
+  	});
+  	remoteAccessTable.on( 'order.dt search.dt', function () {
+        remoteAccessTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
+
+    var userTimesheetTable = $('#userTimesheetTable').DataTable({
+    	"pageLength": 25,
+    	"columnDefs": [ { orderable: false, targets: [0] } ],
+    	"order": [[ 1, 'asc' ]],
+    	"initComplete": function(settings, json) {
+		    $('#userTimesheetTable').show();
+		}
+  	});
+  	userTimesheetTable.on( 'order.dt search.dt', function () {
+        userTimesheetTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
+    /*** Datatables - end ***/
+
+
 });

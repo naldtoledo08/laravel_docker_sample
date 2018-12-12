@@ -25,30 +25,35 @@
     </div>
 @endif
 
-
-<table class="table table-bordered">
-    <tr>
-        <th>No</th>
-        <th>Name</th>
-        <th>Department</th>
-        <th>Position</th>
-        <th>Last time-in</th>
-        <th width="280px">Action</th>
-    </tr>
-    @foreach ($users as $user)
-    <tr>
-        <td></td>
-        <td>{{ $user->firstname . ' ' . $user->lastname }}</td>
-        <td>{{ $user->department ? $user->department : ''  }}</td>
-        <td>{{ $user->position ? $user->position : '' }}</td>
-        <td>{{ $user->last_time_in ? display_date_time($user->last_time_in) : '' }}</td>
-        <td>
-            <a class="btn btn-info" href="{{ route('timesheets.show',$user->id) }}">Show</a>
-            <!-- <a class="btn btn-primary" href="{{ route('timesheets.edit',$user->id) }}">Edit</a> -->
-        </td>
-    </tr>
-     @endforeach
-</table>
+<div class="top-spacing">
+    <table class="table table-bordered hidden" id="userTimesheetTable">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Last time-in</th>
+                <th width="280px">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
+            <tr>
+                <td></td>
+                <td>{{ $user->firstname . ' ' . $user->lastname }}</td>
+                <td>{{ $user->department ? $user->department : ''  }}</td>
+                <td>{{ $user->position ? $user->position : '' }}</td>
+                <td>{{ $user->last_time_in ? display_date_time($user->last_time_in) : '' }}</td>
+                <td>
+                    <a class="btn btn-info" href="{{ route('timesheets.show',$user->id) }}">Show</a>
+                    <!-- <a class="btn btn-primary" href="{{ route('timesheets.edit',$user->id) }}">Edit</a> -->
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
 
 
