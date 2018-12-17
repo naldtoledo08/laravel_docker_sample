@@ -125,4 +125,10 @@ $(document).ready(function() {
     /*** Datatables - end ***/
 
 
+    $('.datepicker_leave').datepicker({
+    	dateFormat: 'yy-mm-dd',
+    	minDate: '-1m'
+    });
+    
+    $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
 });

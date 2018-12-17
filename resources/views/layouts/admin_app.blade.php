@@ -9,6 +9,7 @@
     <meta name="robots" content="all,follow">
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="{{ asset('theme/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('theme/vendor/jquery/jquery-ui/jquery-ui.css') }}">
     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="{{ asset('theme/vendor/font-awesome/css/font-awesome.min.css') }}">
     <!-- Fontastic Custom icon font-->
@@ -29,7 +30,7 @@
     <!-- <link rel="shortcut icon" href="img/favicon.ico"> -->
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->z
   </head>
   <body>
     <!-- Side Navbar -->
@@ -243,6 +244,7 @@
     </div>
     <!-- JavaScript files-->
     <script src="{{ asset('theme/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('theme/vendor/jquery/jquery-ui//jquery-ui.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('theme/vendor/popper.js/umd/popper.min.js') }}"> </script>
     <script src="{{ asset('theme/vendor/bootstrap/js/bootstrap.min.js') }}"></script>

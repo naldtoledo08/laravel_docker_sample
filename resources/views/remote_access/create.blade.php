@@ -8,7 +8,7 @@
             <h2>Create New Remote Access</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
+            <a class="btn btn-primary" href="{{ route('remote-access.index') }}"> Back</a>
         </div>
     </div>
 </div>
@@ -39,14 +39,14 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>From:</strong>
-            {!! Form::text('from', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
+            {!! Form::text('from', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control datepicker', 'readonly' => true)) !!}
         </div>
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>To:</strong>
-            {!! Form::text('to', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
+            {!! Form::text('to', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control datepicker', 'readonly' => true)) !!}
         </div>
     </div>
 

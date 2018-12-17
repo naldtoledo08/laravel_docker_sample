@@ -38,13 +38,13 @@
         <div class="form-group">
             <strong>From:</strong>
             <input type="hidden" name="user_id" readonly="true" value="{{ $user->id }}" class="form-control">
-            {!! Form::text('from', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
+            {!! Form::text('from', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control datepicker_leave', 'readonly' => true)) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>To:</strong>
-            {!! Form::text('to', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
+            {!! Form::text('to', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control datepicker_leave', 'readonly' => true)) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
