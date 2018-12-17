@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Edit New User</h2>
+            <h2>Edit Remote Access</h2>
         </div>
         <div class="pull-right">
             <a class="btn btn-primary" href="{{ route('remote-access.index') }}"> Back</a>
@@ -33,7 +33,8 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>User:</strong>
-            {!! Form::select('user_id', $users, $remote_access->user_id, array('class' => 'form-control')) !!}
+            <input type="hidden" name="user_id" value="{{ $remote_access->user_id}}" >
+            {!! Form::select('user_id', $users, $remote_access->user_id, array('class' => 'form-control', 'disabled'=> true)) !!}
         </div>
     </div>
 
@@ -41,13 +42,13 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>From:</strong>
-            {!! Form::text('from', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
+            {!! Form::text('from', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control datepicker', 'readonly' => true)) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>To:</strong>
-            {!! Form::text('to', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control')) !!}
+            {!! Form::text('to', null, array('placeholder' => 'yyyy-mm-dd','class' => 'form-control datepicker', 'readonly' => true)) !!}
         </div>
     </div>
 

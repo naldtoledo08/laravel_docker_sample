@@ -7,3 +7,6 @@
 #monitoring-container .login-photo img{
 	max-height: 100px;
 }
+
+.hidden{ display: none; }
+.top-spacing { margin-top: 10px; }

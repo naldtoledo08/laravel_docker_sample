@@ -9,10 +9,13 @@
     <meta name="robots" content="all,follow">
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="{{ asset('theme/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('theme/vendor/jquery/jquery-ui/jquery-ui.css') }}">
     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="{{ asset('theme/vendor/font-awesome/css/font-awesome.min.css') }}">
     <!-- Fontastic Custom icon font-->
     <link rel="stylesheet" href="{{ asset('theme/css/fontastic.css') }}">
+    <!-- Datatables-->
+    <link  href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- Google fonts - Roboto -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
     <!-- jQuery Circle-->
@@ -27,7 +30,7 @@
     <!-- <link rel="shortcut icon" href="img/favicon.ico"> -->
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->z
   </head>
   <body>
     <!-- Side Navbar -->
@@ -36,12 +39,14 @@
         <!-- Sidebar Header    -->
         <div class="sidenav-header d-flex align-items-center justify-content-center">
           <!-- User Info-->
-          <div class="sidenav-header-inner text-center"><img src="{{ asset('theme/img//users/Ron.png') }}" alt="person" class="img-fluid rounded-circle">
-            <h2 class="h5">{{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}</h2>
-            @if (!empty(Auth::user()->position->title))
-              <span>{{ Auth::user()->position->title }}</span>
-            @endif            
-          </div>
+          <a href="{{ route('user_profile', [Auth::user()->id, Auth::user()->slug]) }}">
+            <div class="sidenav-header-inner text-center"><img src="{{ asset('theme/img/avatar-default.jpg') }}" alt="person" class="img-fluid rounded-circle">
+              <h2 class="h5">{{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}</h2>
+              @if (!empty(Auth::user()->position->title))
+                <span>{{ Auth::user()->position->title }}</span>
+              @endif            
+            </div>
+          </a>
           <!-- Small Brand information, appears on minimized sidebar-->
           <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>R</strong><strong class="text-primary">T</strong></a></div>
         </div>
@@ -52,17 +57,7 @@
             <li class="{{is_route_active('dashboard')}}">
               <a href="{{ route('dashboard') }}"> <i class="icon-home"></i>Dashboard</a>
             </li>
-            @can('department-list')
-              <li class="{{is_route_active('departments')}}">
-                <a href="{{ route('departments.index') }}"> <i class="fa fa-bar-chart"></i>Departments</a>
-              </li>
-            @endcan
-
-            @can('position-list')
-              <li class="{{is_route_active('positions')}}">
-                <a href="{{ route('positions.index') }}"> <i class="icon-grid"></i>Positions</a>
-              </li>
-            @endcan
+            
 
             <li class="{{is_route_active('timesheets')}}">
               @can('timesheet-summary')
@@ -73,12 +68,7 @@
             </li>
 
             @role('admin')
-              <li class="{{is_route_active('shifts')}}">
-                <a href="{{ route('shifts.index') }}"> <i class="icon-user"></i>Shifts</a>
-              </li>
-              <li class="{{is_route_active('leave-types')}}">
-                <a href="{{ route('leave-types.index') }}"> <i class="icon-user"></i>Leave Types</a>
-              </li>
+             
               <li class="{{is_route_active('remotes')}}">
                 <a href="{{ route('remotes.index') }}"> <i class="icon-user"></i>Remote Details</a>
               </li>
@@ -97,13 +87,34 @@
               <li class="{{is_route_active('monitoring')}}">
                 <a href="{{ route('monitoring') }}"> <i class="icon-grid"></i>Monitoring</a>
               </li>
+
+              <li class="dropdown {{ is_route_active('departments').is_route_active('positions').is_route_active('shifts').is_route_active('leave-types') }}">
+                <a href="#settingsDropdown" aria-expanded="false" data-toggle="collapse">
+                  <i class="icon-interface-windows"></i>Settings
+                </a>
+                <ul id="settingsDropdown" class="collapse list-unstyled" role="menu">
+                    <li class="{{is_route_active('departments')}}">
+                      <a href="{{ route('departments.index') }}"> <i class="fa fa-bar-chart"></i>Departments</a>
+                    </li>
+                    <li class="{{is_route_active('positions')}}">
+                      <a href="{{ route('positions.index') }}"> <i class="icon-grid"></i>Positions</a>
+                    </li>
+
+                   <li class="{{is_route_active('shifts')}}">
+                      <a href="{{ route('shifts.index') }}"> <i class="icon-user"></i>Shifts</a>
+                    </li>
+                    <li class="{{is_route_active('leave-types')}}">
+                      <a href="{{ route('leave-types.index') }}"> <i class="icon-user"></i>Leave Types</a>
+                    </li>
+                </ul>
+              </li>
             @endrole
 
           </ul>
         </div>
 
 
-        <div class="admin-menu">
+        <!-- <div class="admin-menu">
           <h5 class="sidenav-heading">Sample menu</h5>
           <ul id="side-admin-menu" class="side-menu list-unstyled"> 
             <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
@@ -125,7 +136,7 @@
               </a>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
 
 
@@ -233,6 +244,8 @@
     </div>
     <!-- JavaScript files-->
     <script src="{{ asset('theme/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('theme/vendor/jquery/jquery-ui//jquery-ui.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('theme/vendor/popper.js/umd/popper.min.js') }}"> </script>
     <script src="{{ asset('theme/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('theme/js/grasp_mobile_progress_circle-1.0.0.min.js') }}"></script>
