@@ -128,6 +128,7 @@
 			            <th>Type</th>
 			            <th>From</th>
 			            <th>To</th>
+			            <th>Debit/Credit</th>
 			            <th>Approve</th>
 			            @role('admin')
 			            <th>Action</th>
@@ -135,11 +136,12 @@
 			        </tr>
 			        @if($user->leave_credits)
 			        @foreach ($user->leave_credits as $leave)
-			        <tr>
-			            <td>{{ $leave->num_of_days }}</td>
+			        <tr class="leave-{{ $leave->type }}">
+			            <td>{{ abs($leave->num_of_days) }}</td>
 			            <td>{{ $leave->leaveType->name }}</td>
 			            <td>{{ display_date($leave->from) }}</td>
 			            <td>{{ display_date($leave->to) }}</td>
+			            <td>{{ ucwords($leave->type) }}</td>
 			            <td>{{ (($leave->is_approve == 1) ? 'Yes' : 'No') }}</td>
 			            
 			            @role('admin')

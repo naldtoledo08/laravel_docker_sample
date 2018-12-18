@@ -26,7 +26,6 @@ class UserTableSeeder extends Seeder
             'email_verified_at' => date('Y-m-d H:i:s')
 		]);
 
-
         EmployeeSchedule::create([
             'user_id' => $user->id,
             'type' => 'fixed',
@@ -36,6 +35,22 @@ class UserTableSeeder extends Seeder
             'to_flex' => '21:00:00',
             'shift_id' => 1
         ]);
+
+        $users = factory(App\Models\User::class, 15)->create();
+
+        foreach ($users as $user) {
+            EmployeeSchedule::create([
+                'user_id' => $user->id,
+                'type' => 'fixed',
+                'from' => '6:00:00',
+                'from_flex' => '12:00:00',
+                'to' => '15:00:00',
+                'to_flex' => '21:00:00',
+                'shift_id' => 1
+            ]);
+
+        }
+        
 
     }
 }

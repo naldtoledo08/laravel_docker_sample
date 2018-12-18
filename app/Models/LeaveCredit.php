@@ -12,7 +12,7 @@ class LeaveCredit extends Model implements Auditable
     
     protected $table = 'leave_credits';
     protected $fillable = [
-    	'user_id', 'leave_type_id', 'description', 'num_of_days', 'from', 'to', 'description', 'is_approve'
+    	'user_id', 'leave_type_id', 'description', 'num_of_days', 'from', 'to', 'type',  'description', 'is_approve'
     ];
 
     public function leaveType()
@@ -31,6 +31,6 @@ class LeaveCredit extends Model implements Auditable
      * @var array
      */
     protected $auditInclude = [
-        'user_id', 'leave_type_id', 'description', 'num_of_days', 'from', 'to', 'description', 'is_approve'
+        'user_id', 'leave_type_id', 'description', 'num_of_days', 'from', 'to', 'type',  'description', 'is_approve'
     ];
 }

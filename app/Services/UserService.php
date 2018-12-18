@@ -123,6 +123,10 @@ class UserService
 
 	public function createLeave($data)
 	{
+		if($data['type'] == 'credit') {
+            $data['num_of_days'] =  $data['num_of_days'] * -1;
+        }
+        
 		return $this->leaveCreditRepo->create($data);
 	}
 

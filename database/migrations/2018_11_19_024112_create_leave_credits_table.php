@@ -18,6 +18,8 @@ class CreateLeaveCreditsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->enum('type', ['credit', 'debit']);
+            
             $table->integer('leave_type_id')->unsigned();
             $table->foreign('leave_type_id')->references('id')->on('leave_types');
 

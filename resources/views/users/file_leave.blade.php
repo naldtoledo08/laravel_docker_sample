@@ -49,6 +49,17 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
+            <strong>Type:</strong>
+            <select class="form-control" name="type">
+                <option value="credit">Credit</option>
+                @role('admin')
+                <option value="debit">Debit</option>
+                @endrole
+            </select>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
             <strong>Number of days:</strong>
             {!! Form::text('num_of_days', null, array('placeholder' => '','class' => 'form-control')) !!}
         </div>

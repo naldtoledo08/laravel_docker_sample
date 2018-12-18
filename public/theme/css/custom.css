@@ -10,3 +10,5 @@
 
 .hidden{ display: none; }
 .top-spacing { margin-top: 10px; }
+
+tr.leave-credit { background-color: #fdf5e6 }
