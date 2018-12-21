@@ -32,4 +32,8 @@ class UserRepository extends BaseRepository implements RepositoryInterface
                 ->first();
     }
 
+    public function getNewUserByMonth($month){        
+        return $this->model->whereMonth('date_joined', '=', $month)->get();
+    }
+
 }

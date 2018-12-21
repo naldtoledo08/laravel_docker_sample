@@ -22,6 +22,7 @@ class UserTableSeeder extends Seeder
             'password' => '$2y$10$ODXv1BScQnJrzaFed23RV.jCLui9weJjhb5RSHfLyZJXwco5jHpeu',
             'department_id' => 1,
             'position_id' => 1,
+            'date_joined' => '2018-11-01',
 			'slug' => 'ronald-toledo',
             'email_verified_at' => date('Y-m-d H:i:s')
 		]);

@@ -8,15 +8,15 @@
     </div>
 @endif
 
-<section class="dashboard-counts section-padding">
+<section class="dashboard-counts">
         <div class="container-fluid">
           <div class="row">
             <!-- Count item widget-->
             <div class="col-xl-2 col-md-4 col-6">
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-user"></i></div>
-                <div class="name"><strong class="text-uppercase">New Clients</strong><span>Last 7 days</span>
-                  <div class="count-number">25</div>
+                <div class="name"><strong class="text-uppercase">Number of Employee</strong><span>As of today</span>
+                  <div class="count-number">{{ '0' }}</div>
                 </div>
               </div>
             </div>
@@ -24,8 +24,8 @@
             <div class="col-xl-2 col-md-4 col-6">
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-padnote"></i></div>
-                <div class="name"><strong class="text-uppercase">Work Orders</strong><span>Last 5 days</span>
-                  <div class="count-number">400</div>
+                <div class="name"><strong class="text-uppercase">New Employee</strong><span>{{ $month_year }}</span>
+                  <div class="count-number">{{ $new_user_current_month_count }}</div>
                 </div>
               </div>
             </div>
@@ -33,8 +33,8 @@
             <div class="col-xl-2 col-md-4 col-6">
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-check"></i></div>
-                <div class="name"><strong class="text-uppercase">New Quotes</strong><span>Last 2 months</span>
-                  <div class="count-number">342</div>
+                <div class="name"><strong class="text-uppercase">Currently Login</strong><span>As of {{ '' }}</span>
+                  <div class="count-number">{{ '0' }}</div>
                 </div>
               </div>
             </div>
@@ -42,8 +42,8 @@
             <div class="col-xl-2 col-md-4 col-6">
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-bill"></i></div>
-                <div class="name"><strong class="text-uppercase">New Invoices</strong><span>Last 2 days</span>
-                  <div class="count-number">123</div>
+                <div class="name"><strong class="text-uppercase">Leave Today</strong><span>{{ $date_today }}</span>
+                  <div class="count-number">{{ '0' }}</div>
                 </div>
               </div>
             </div>
@@ -51,8 +51,8 @@
             <div class="col-xl-2 col-md-4 col-6">
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-list"></i></div>
-                <div class="name"><strong class="text-uppercase">Open Cases</strong><span>Last 3 months</span>
-                  <div class="count-number">92</div>
+                <div class="name"><strong class="text-uppercase">For Approvals</strong><span>Leave / Remote</span>
+                  <div class="count-number">{{ '0' }}</div>
                 </div>
               </div>
             </div>

@@ -140,5 +140,11 @@ class UserService
 		return $this->timesheetRepo->getLoginUsers();
 	}
 
+
+	public function getNewUserByMonth($month)
+	{
+		return $this->user->getNewUserByMonth($month);
+	}
+
 	
 }
